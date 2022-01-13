@@ -1,0 +1,17 @@
+﻿<Window x:Class="Zvuki.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Zvuki"
+        mc:Ignorable="d"
+        Title="StartWindow" Height="300" Width="250">
+    <Grid>
+        <Label x:Name="Title" Content="Welcome" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="60"/>
+        <TextBox x:Name="Login"  HorizontalAlignment="Center" Margin="0,56,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" Height="20" Width="180"/>
+        <TextBox x:Name="Password" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Height="20" Width="180"/>
+        <Button Content="Log in" HorizontalAlignment="Center" Margin="0,159,0,0" VerticalAlignment="Top" Height="30" Width="180"/>
+        <Button Content="Register" Click="Button_Click_Register" HorizontalAlignment="Center" Margin="0,194,0,0" VerticalAlignment="Top" Height="30" Width="180"/>
+
+    </Grid>
+</Window>
