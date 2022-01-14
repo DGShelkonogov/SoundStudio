@@ -19,18 +19,21 @@ namespace Zvuki
         public StartWindow()
         {
             InitializeComponent();
+            mainFrame.Source = new Uri("Pages/StartWin/LoginPage.xaml", UriKind.Relative);
         }
 
-        private void Button_Click_Register(object sender, RoutedEventArgs e)
+        public void setLogin()
         {
-            RegisterWindow window = new RegisterWindow();
-            window.Show();
-            this.Close();
+            this.Height = 300;
+            this.Width = 250;
+            mainFrame.Source = new Uri("Pages/StartWin/LoginPage.xaml", UriKind.Relative);
         }
-
-        public void setRegisterView()
+        public void setRegister()
         {
-            
+
+            this.Height = 450;
+            this.Width = 400;
+            mainFrame.Source = new Uri("Pages/StartWin/RegisterPage.xaml", UriKind.Relative);
         }
     }
 }

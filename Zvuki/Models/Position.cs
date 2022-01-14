@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,43 @@ namespace Zvuki.Models
     {
         [Key]
         public int IdPosition { get; set; }
-        public string Title { get; set; }
-        public int Salary { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
+        string title;
+        int salary;
+        ICollection<Employee> employees;
+
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                title = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public int Salary
+        {
+            get { return salary; }
+            set
+            {
+                salary = value;
+                OnPropertyChanged("Salary");
+            }
+        }
+        public virtual ICollection<Employee> Employees
+        {
+            get { return employees; }
+            set
+            {
+                employees = value;
+                OnPropertyChanged("Employees");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

@@ -11,34 +11,44 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zvuki.Models;
 
 namespace Zvuki
 {
     /// <summary>
-    /// Логика взаимодействия для RegisterWindow.xaml
+    /// Логика взаимодействия для AdTypePage.xaml
     /// </summary>
-    /// 
-    public partial class RegisterWindow : Window
+    public partial class AdTypePage : Page
     {
         ObservableCollection<AdType> listDropMails = new ObservableCollection<AdType>();
-        public RegisterWindow()
+
+        public AdTypePage()
         {
             InitializeComponent();
             AddList.ItemsSource = listDropMails;
+            ReadWriteAsync();
+        }
 
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                // получаем объекты из бд и выводим на консоль
-                var users = db.AdTypes.ToList();
-
-                foreach (AdType adType in users)
+        public async void ReadWriteAsync()
+        {
+            await Task.Run(() => {
+                using (ApplicationContext db = new ApplicationContext())
                 {
-                    listDropMails.Add(adType);
+                    // получаем объекты из бд и выводим на консоль
+                    var ads = db.AdTypes.ToList();
+
+                    foreach (AdType adType in ads)
+                    {
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            listDropMails.Add(adType);
+                        });
+                    }
+
                 }
-               
-            }
+            });
         }
 
         private void Button_Click_Add_Ad(object sender, RoutedEventArgs e)
@@ -55,5 +65,7 @@ namespace Zvuki
                 db.SaveChanges();
             }
         }
+
+
     }
 }

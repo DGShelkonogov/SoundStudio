@@ -1,0 +1,49 @@
+﻿<Page x:Class="Zvuki.Pages.Manager.CreateCandidatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Zvuki.Pages.Manager"
+      mc:Ignorable="d" 
+      Background="AliceBlue"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CreateCandidatePage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+         <ListView Name="ResultList" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=Title}">Client</GridViewColumn>
+           
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+        <ListView Name="RolesList" ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Column="1" Margin="10,155,435,70">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Role</GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Label Grid.Column="1" Content="New candidate" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="1" Content="Client" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
+
+
+        <Button Grid.Column="1" Content="Add" HorizontalAlignment="Left" Margin="10,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add"/>
+        <Button Grid.Column="1" Content="Update" HorizontalAlignment="Left" Margin="115,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
+        <Button Grid.Column="1" Content="Delete" HorizontalAlignment="Left" Margin="220,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
+        <ComboBox  x:Name="cmbClient" Grid.Column="1" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="155"/>
+        <Label Grid.Column="1" Content="Roles" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cmbRoles" Grid.Column="1" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="155"/>
+    </Grid>
+</Page>

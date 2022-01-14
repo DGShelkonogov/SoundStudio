@@ -1,0 +1,30 @@
+﻿<Page x:Class="Zvuki.Pages.Сleaner.CleanerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Zvuki.Pages.Сleaner"
+      mc:Ignorable="d" 
+      Background="AliceBlue"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CleanerPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListView Name="CleaningList" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Date</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Employee</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Room number</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Grid.Column="1" Content="Done" HorizontalAlignment="Left" Margin="10,408,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Done"/>
+        <Label Grid.Column="1" Content="Cleaning list" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Page>

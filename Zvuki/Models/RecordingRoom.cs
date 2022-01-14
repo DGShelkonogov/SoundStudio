@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,23 @@ namespace Zvuki.Models
     {
         [Key]
         public int IdRecordingRoom { get; set; }
-        public string RoomNumber { get; set; }
+        string roomNumber;
+        public string RoomNumber
+        {
+            get { return roomNumber; }
+            set
+            {
+                roomNumber = value;
+                OnPropertyChanged("RoomNumber");
+            }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

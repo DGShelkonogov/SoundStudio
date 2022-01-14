@@ -5,6 +5,11 @@
       "ProjectGuid": "5ec2eb58-dc46-4fda-9554-da6554ee042b",
       "DisplayName": "Zvuki",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1

@@ -1,0 +1,91 @@
+﻿<Page x:Class="Zvuki.Pages.HR.CreateEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Zvuki.Pages.HR"
+      mc:Ignorable="d" 
+      Background="AliceBlue"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CreateEmployeePage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <ListView Name="EmployeeList" ScrollViewer.VerticalScrollBarVisibility="Hidden" Visibility="Visible">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Фамилия</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Отчество</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Телефон</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Логин</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Почта</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Дата рождения</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">ИНН</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">СНИЛС</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Номер счёта</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Банк получателя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">БИК</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">ИНН Банка</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">КПП Банка</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Кор. счёт</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add"/>
+        <Button Content="Update" HorizontalAlignment="Left" Margin="115,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="220,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
+
+       
+
+
+        <Grid x:Name="createEmployeeGrid" Visibility="Hidden">
+            <Label Content="Create new employee" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+
+            <Label Content="Name" HorizontalAlignment="Left" Margin="16,59,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="16,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+            <Label Content="Surname" HorizontalAlignment="Left" Margin="16,103,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtSurname" HorizontalAlignment="Left" Margin="16,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Patronymic" HorizontalAlignment="Left" Margin="16,147,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtPatronymic" HorizontalAlignment="Left" Margin="16,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label  Content="Phone" HorizontalAlignment="Left" Margin="16,191,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Margin="16,217,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Email" HorizontalAlignment="Left" Margin="16,235,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="16,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Login" HorizontalAlignment="Left" Margin="200,59,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtLogin" HorizontalAlignment="Left" Margin="200,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Password" HorizontalAlignment="Left" Margin="200,103,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="200,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Repeat password" HorizontalAlignment="Left" Margin="200,147,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtRepeatPassword" HorizontalAlignment="Left" Margin="200,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="TIN" HorizontalAlignment="Left" Margin="17,279,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtTIN" HorizontalAlignment="Left" Margin="16,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="SNILS" HorizontalAlignment="Left" Margin="17,323,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtSNILS" HorizontalAlignment="Left" Margin="16,349,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Number" HorizontalAlignment="Left" Margin="400,59,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtNumber" HorizontalAlignment="Left" Margin="400,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Bank name" HorizontalAlignment="Left" Margin="400,103,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtBankName" HorizontalAlignment="Left" Margin="400,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="BIC" HorizontalAlignment="Left" Margin="400,147,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtBIC" HorizontalAlignment="Left" Margin="400,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="TIN of the bank" HorizontalAlignment="Left" Margin="400,191,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtTINOfTheBank" HorizontalAlignment="Left" Margin="400,216,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="COR of the bank" HorizontalAlignment="Left" Margin="400,235,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtCOR" HorizontalAlignment="Left" Margin="400,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Correspondent account" HorizontalAlignment="Left" Margin="400,279,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtCorrespondentAccount" HorizontalAlignment="Left" Margin="400,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <ComboBox x:Name="cmbPositions" HorizontalAlignment="Left" Margin="556,85,0,0" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Position" HorizontalAlignment="Left" Margin="556,59,0,0" VerticalAlignment="Top"/>
+        </Grid>
+        
+    </Grid>
+    
+   
+
+
+</Page>

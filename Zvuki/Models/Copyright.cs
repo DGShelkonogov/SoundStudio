@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -11,13 +12,34 @@ namespace Zvuki.Models
     {
         [Key]
         public int IdCopyright { get; set; }
-        public string Path { get; set; }
-        public DateTime DateTime { get; set; }
 
-        public virtual ICollection<AudioRecordingClient>
-            AudioRecordingClients { get; set; }
+        string path;
+        DateTime dateTime;
 
-        public virtual ICollection<AudioRecordingGroup>
-            AudioRecordingGroups { get; set; }
+        public string Path
+        {
+            get { return path; }
+            set
+            {
+                path = value;
+                OnPropertyChanged("Path");
+            }
+        }
+        public DateTime DateTime 
+        {
+            get { return dateTime; }
+            set
+            {
+                dateTime = value;
+                OnPropertyChanged("DateTime");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 }

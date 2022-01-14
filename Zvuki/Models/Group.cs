@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,56 @@ namespace Zvuki.Models
     {
         [Key]
         public int IdGroup { get; set; }
-        public string Title { get; set; }
-        public virtual ICollection<Client> Clients { get; set; }
-        public virtual ICollection<Rent> Rents { get; set; }
 
-        public virtual ICollection<AudioRecordingGroup> 
-            AudioRecordingGroups { get; set; }
+        string title;
+        ICollection<Client> clients;
+        ICollection<Rent> rents;
+        ICollection<AudioRecordingGroup> audioRecordingGroups;
+
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                title = value;
+                OnPropertyChanged("Title");
+            }
+        }
+        public virtual ICollection<Client> Clients
+        {
+            get { return clients; }
+            set
+            {
+                clients = value;
+                OnPropertyChanged("Clients");
+            }
+        }
+        public virtual ICollection<Rent> Rents 
+        {
+            get { return rents; }
+            set
+            {
+                rents = value;
+                OnPropertyChanged("Rents");
+            }
+        }
+        public virtual ICollection<AudioRecordingGroup> AudioRecordingGroups 
+        {
+            get { return audioRecordingGroups; }
+            set
+            {
+                audioRecordingGroups = value;
+                OnPropertyChanged("AudioRecordingGroups");
+            }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
 
 
     }
