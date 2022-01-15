@@ -13,19 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Zvuki.Pages.Client
+namespace Zvuki.Pages.ClientPages
 {
     /// <summary>
-    /// Логика взаимодействия для RentPage.xaml
+    /// Логика взаимодействия для InvitationPage.xaml
     /// </summary>
-    public partial class RentPage : Page
+    public partial class InvitationPage : Page
     {
-        public RentPage()
+        public InvitationPage()
         {
             InitializeComponent();
         }
 
-        private void Button_Click_ToReSSnt(object sender, RoutedEventArgs e)
+        private void Button_Click_Accept(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Refuse(object sender, RoutedEventArgs e)
         {
 
         }

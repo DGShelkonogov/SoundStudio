@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Zvuki.Pages.Client
+namespace Zvuki.Pages.ClientPages
 {
     /// <summary>
-    /// Логика взаимодействия для GroupPage.xaml
+    /// Логика взаимодействия для RecordingPage.xaml
     /// </summary>
-    public partial class GroupPage : Page
+    public partial class RecordingPage : Page
     {
-        public GroupPage()
+        public RecordingPage()
         {
             InitializeComponent();
         }
@@ -30,12 +30,22 @@ namespace Zvuki.Pages.Client
 
         }
 
+        private void Button_Click_Delete(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void Button_Click_Update(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Button_Click_Delete(object sender, RoutedEventArgs e)
+        private void Button_Click_Upload_Recording(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Upload_Copyright(object sender, RoutedEventArgs e)
         {
 
         }

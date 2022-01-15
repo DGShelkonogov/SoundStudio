@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Zvuki"
   ],
-  "SelectedNode": "\\Zvuki.sln",
+  "SelectedNode": "\\Zvuki\\GroupWindow.xaml",
   "PreviewInSolutionExplorer": false
 }

@@ -10,18 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Zvuki
+namespace Zvuki.Pages.ClientPages
 {
     /// <summary>
-    /// Логика взаимодействия для ClientWindow.xaml
+    /// Логика взаимодействия для RentPage.xaml
     /// </summary>
-    public partial class ClientWindow : Window
+    public partial class RentPage : Page
     {
-        public ClientWindow()
+        public RentPage()
         {
             InitializeComponent();
+        }
+
+
+        private void Button_Click_ToRent(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

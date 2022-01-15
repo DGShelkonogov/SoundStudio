@@ -7,7 +7,119 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Frame x:Name="mainFrame"  NavigationUIVisibility="Hidden" Content="Frame" Margin="0,42,0,0"/>
-        <Button Content="Ad type" Tag="AdTypePage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="42" Width="100"  Click="Button_Click"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Frame x:Name="mainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" Content="Frame" />
+        <Label Content="Role: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cmbRoles" SelectionChanged="cmbRoles_SelectionChanged" HorizontalAlignment="Left" Margin="39,2,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+           
+           
+            <Grid Grid.Column="1" x:Name="GridAdvertiser" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Content="Ad" Tag="AdPage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Ad type" Tag="AdTypePage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+            </Grid>
+
+
+            <Grid Grid.Column="1" x:Name="GridAccountant" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Contarcts" Tag="ContarctPage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Payments" Tag="PaymentPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+            </Grid>
+
+            <Grid Grid.Column="1" x:Name="GridClient" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Groups" Tag="GroupPage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Invitations" Tag="InvitationPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Recordings" Tag="RecordingPage" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Rents" Tag="RentPage" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Results" Tag="ResultPage" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+            </Grid>
+
+            <Grid Grid.Column="1" x:Name="GridHR" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Employees" Tag="CreateEmployeePage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Positions" Tag="PositionPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+            </Grid>
+
+
+            <Grid Grid.Column="1" x:Name="GridManager" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Candidates" Tag="CreateCandidatePage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Results" Tag="CreateResultPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Voice role" Tag="VoiceActingRolePage" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+            </Grid>
+
+
+            <Grid Grid.Column="1" x:Name="GridCleaner" Visibility="Visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Clean page" Tag="CleanerPage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+            </Grid>
+
+        </Grid>
+
+
+
     </Grid>
+
+
 </Window>

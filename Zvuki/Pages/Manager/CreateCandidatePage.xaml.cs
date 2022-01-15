@@ -24,5 +24,20 @@ namespace Zvuki.Pages.Manager
         {
             InitializeComponent();
         }
+
+        private void Button_Click_Add(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Update(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_Delete(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
