@@ -50,7 +50,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button Content="Contarcts" Tag="ContarctPage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Contarcts" Tag="ContractPage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
                 <Button Content="Payments" Tag="PaymentPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
             </Grid>
 

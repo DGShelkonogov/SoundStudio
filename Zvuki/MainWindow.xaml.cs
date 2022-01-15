@@ -8,7 +8,7 @@ namespace Zvuki
     public partial class MainWindow : Window
     {
 
-        ArrayList list = new ArrayList() { "Accountant", "Advertiser", "Client", "HR", "Manager", "Cleaner" };
+        ArrayList list = new ArrayList() { "Accountant", "Advertiser", "ClientPages", "HR", "Manager", "Сleaner" };
         Grid[] grids = new Grid[6];
 
         public MainWindow()
@@ -28,9 +28,9 @@ namespace Zvuki
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string ass = cmbRoles.SelectedItem.ToString(); 
-
-            mainFrame.Source = new Uri("Pages/MainWin/" + (sender as Button).Tag.ToString() + ".xaml", UriKind.Relative);
+            string selectItem = cmbRoles.SelectedItem.ToString();
+            string uri = $"Pages/{selectItem}/{(sender as Button).Tag.ToString()}.xaml";
+            mainFrame.Source = new Uri(uri, UriKind.Relative);
         }
 
         private void cmbRoles_SelectionChanged(object sender, SelectionChangedEventArgs e)
