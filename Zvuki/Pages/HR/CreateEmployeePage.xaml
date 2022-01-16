@@ -18,21 +18,21 @@
         <ListView Name="EmployeeList" ScrollViewer.VerticalScrollBarVisibility="Hidden" Visibility="Visible">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Фамилия</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Имя</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Отчество</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Телефон</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Логин</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Почта</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Дата рождения</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">ИНН</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">СНИЛС</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Номер счёта</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Банк получателя</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">БИК</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">ИНН Банка</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">КПП Банка</GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Кор. счёт</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Human.Surname}">Surname</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Human.Name}">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Human.Patronomic}">Отчество</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Human.Phone}">Телефон</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Human.Login}">Логин</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Human.Email}">Почта</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Human.DateOfBirth}">Дата рождения</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=INN}">ИНН</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SNILS}">СНИЛС</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BankAccount.Number}">Номер счёта</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BankAccount.Bank}">Банк получателя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BankAccount.Bik}">БИК</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BankAccount.INN}">ИНН Банка</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BankAccount.KPP}">КПП Банка</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BankAccount.KorAccount}">Кор. счёт</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -40,7 +40,7 @@
         <Button Content="Update" HorizontalAlignment="Left" Margin="115,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
         <Button Content="Delete" HorizontalAlignment="Left" Margin="220,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
 
-       
+
 
 
         <Grid x:Name="createEmployeeGrid" Visibility="Hidden">
@@ -79,13 +79,27 @@
             <TextBox x:Name="txtCOR" HorizontalAlignment="Left" Margin="400,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
             <Label Content="Correspondent account" HorizontalAlignment="Left" Margin="400,279,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtCorrespondentAccount" HorizontalAlignment="Left" Margin="400,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <ComboBox x:Name="cmbPositions" HorizontalAlignment="Left" Margin="556,85,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox x:Name="cmbPositions" SelectionChanged="cmbPosition_SelectionChanged" HorizontalAlignment="Left" Margin="556,85,0,0" VerticalAlignment="Top" Width="120"/>
             <Label Content="Position" HorizontalAlignment="Left" Margin="556,59,0,0" VerticalAlignment="Top"/>
+            <Button Content="Back" HorizontalAlignment="Left" Margin="220,22,0,0" VerticalAlignment="Top" Height="20" Width="60" Click="Button_Click_Back"/>
+            <DatePicker x:Name="dpDateOfBirth" HorizontalAlignment="Left" Margin="200,216,0,0" VerticalAlignment="Top"/>
+            <Label Content="Date of birth" HorizontalAlignment="Left" Margin="200,191,0,0" VerticalAlignment="Top"/>
+
+
+            <ListView Name="PositionList" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="556,112,124,77">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Title}">Position</GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
         </Grid>
-        
+
     </Grid>
-    
-   
+
+
 
 
 </Page>

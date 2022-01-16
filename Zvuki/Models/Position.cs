@@ -14,7 +14,7 @@ namespace Zvuki.Models
         public int IdPosition { get; set; }
         string title;
         int salary;
-        ICollection<Employee> employees;
+       // ICollection<Employee> employees;
 
         public string Title
         {
@@ -34,7 +34,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Salary");
             }
         }
-        public virtual ICollection<Employee> Employees
+       /* public virtual ICollection<Employee> Employees
         {
             get { return employees; }
             set
@@ -42,7 +42,7 @@ namespace Zvuki.Models
                 employees = value;
                 OnPropertyChanged("Employees");
             }
-        }
+        }*/
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string prop)

@@ -7,9 +7,11 @@ namespace Zvuki
 {
     public partial class MainWindow : Window
     {
+        
 
         ArrayList list = new ArrayList() { "Accountant", "Advertiser", "ClientPages", "HR", "Manager", "Сleaner" };
         Grid[] grids = new Grid[6];
+
 
         public MainWindow()
         {
@@ -20,8 +22,7 @@ namespace Zvuki
             grids[3] = GridHR;
             grids[4] = GridManager;
             grids[5] = GridCleaner;
-
-            cmbRoles.ItemsSource = list;
+            cmbRoles.ItemsSource = list;         
             cmbRoles.SelectedIndex = 0;
 
         }
@@ -47,6 +48,16 @@ namespace Zvuki
                 else
                     grids[i].Visibility = Visibility.Hidden;
             }
+        }
+
+        private void Button_Click_LogOut(object sender, RoutedEventArgs e)
+        {
+            DataLoader.DeleteFile(DataLoader.HUMAN_FILE);
+            DataLoader.DeleteFile(DataLoader.CLIENT_FILE);
+            DataLoader.DeleteFile(DataLoader.EMPLOYEE_FILE);
+            StartWindow window = new StartWindow();
+            window.Show();
+            this.Close();
         }
     }
 }

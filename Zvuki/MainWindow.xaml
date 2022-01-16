@@ -54,7 +54,7 @@
                 <Button Content="Payments" Tag="PaymentPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
             </Grid>
 
-            <Grid Grid.Column="1" x:Name="GridClient" Visibility="Hidden">
+            <Grid Grid.Column="1" x:Name="GridClient" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -69,6 +69,7 @@
                 <Button Content="Recordings" Tag="RecordingPage" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
                 <Button Content="Rents" Tag="RentPage" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
                 <Button Content="Results" Tag="ResultPage" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Log out" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click_LogOut" Margin="2"/>
             </Grid>
 
             <Grid Grid.Column="1" x:Name="GridHR" Visibility="Hidden">
@@ -102,7 +103,7 @@
             </Grid>
 
 
-            <Grid Grid.Column="1" x:Name="GridCleaner" Visibility="Visible">
+            <Grid Grid.Column="1" x:Name="GridCleaner" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>

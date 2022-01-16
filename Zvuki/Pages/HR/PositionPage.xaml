@@ -15,7 +15,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView Name="PositionList" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+        <ListView Name="PositionList" MouseUp="PositionList_MouseUp" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=Title}">Title</GridViewColumn>

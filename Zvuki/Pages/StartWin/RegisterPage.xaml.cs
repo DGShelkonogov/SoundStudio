@@ -70,13 +70,14 @@ namespace Zvuki.Pages
                         db.Clients.Add(client);
                         db.SaveChanges();
 
+                        DataLoader.saveHuman(human);
+                        DataLoader.saveClient(client);
+
                         MainWindow window = new MainWindow();
                         window.Show();
                         StartWindow win = (StartWindow)Window.GetWindow(this);
                         win.Close();
                     });
-
-                  
                 }
             });
         }

@@ -12,7 +12,7 @@
     <Grid>
         <Label x:Name="Title" Content="Welcome" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="60"/>
         <TextBox x:Name="txtLogin"  HorizontalAlignment="Center" Margin="0,56,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" Height="20" Width="180"/>
-        <TextBox x:Name="txtPassword" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Height="20" Width="180"/>
+        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Center" Margin="0,81,0,0" VerticalAlignment="Top" Height="20" Width="180"/>
         <Button Content="Log in" HorizontalAlignment="Center" Margin="0,159,0,0" VerticalAlignment="Top" Height="30" Width="180" Click="Button_Click_Login"/>
         <Button Content="Register" Click="Button_Click_Register" HorizontalAlignment="Center" Margin="0,194,0,0" VerticalAlignment="Top" Height="30" Width="180"/>
     </Grid>

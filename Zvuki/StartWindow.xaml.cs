@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Zvuki.Models;
 
 namespace Zvuki
 {
@@ -19,6 +20,15 @@ namespace Zvuki
         public StartWindow()
         {
             InitializeComponent();
+
+            Human human = DataLoader.getHuman();
+            if (human != null)
+            {
+                MainWindow window = new MainWindow();
+                window.Show();
+                this.Close();
+            }
+
             mainFrame.Source = new Uri("Pages/StartWin/LoginPage.xaml", UriKind.Relative);
         }
 
