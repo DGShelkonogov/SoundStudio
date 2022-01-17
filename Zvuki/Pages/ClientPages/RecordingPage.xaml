@@ -13,7 +13,8 @@
         <ListView Name="RecordingList" Margin="0,0,560,0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Title</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AudioRecording.Path}">Recording path</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Copyright.Path}">Copyright path</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -24,7 +25,7 @@
         <Label Content="New recording" FontSize="20" HorizontalAlignment="Left" Margin="245,10,0,0" VerticalAlignment="Top"/>
         <Button Content="upload" HorizontalAlignment="Left" Margin="247,88,0,0" VerticalAlignment="Top" Height="30" Width="70" Click="Button_Click_Upload_Recording"/>
         <Label x:Name="txtTitle" Content="Title" HorizontalAlignment="Left" Margin="247,57,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="txtСщзнкшпре" Content="Copyright" HorizontalAlignment="Left" Margin="247,123,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="txtCopyright" Content="Copyright" HorizontalAlignment="Left" Margin="247,123,0,0" VerticalAlignment="Top"/>
         <Button Content="upload" HorizontalAlignment="Left" Margin="247,149,0,0" VerticalAlignment="Top" Height="30" Width="70" Click="Button_Click_Upload_Copyright"/>
 
     </Grid>

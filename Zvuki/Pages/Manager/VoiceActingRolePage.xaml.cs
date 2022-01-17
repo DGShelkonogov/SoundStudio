@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Zvuki.Models;
 
 namespace Zvuki.Pages.Manager
 {
@@ -20,23 +22,111 @@ namespace Zvuki.Pages.Manager
     /// </summary>
     public partial class VoiceActingRolePage : Page
     {
+        ObservableCollection<VoiceActingRole> voiceActingRoles = new ObservableCollection<VoiceActingRole>();
+
         public VoiceActingRolePage()
         {
             InitializeComponent();
+            loadData();
+            VoiceRoleList.ItemsSource = voiceActingRoles;
         }
 
         private void Button_Click_Add(object sender, RoutedEventArgs e)
         {
-
+            CreateVoiceRole();
         }
 
         private void Button_Click_Update(object sender, RoutedEventArgs e)
         {
-
+            UpdateVoiceRole();
         }
 
         private void Button_Click_Delete(object sender, RoutedEventArgs e)
         {
+            DaleteVoiceRole();
+        }
+
+        public async void CreateVoiceRole()
+        {
+            await Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        VoiceActingRole role = new VoiceActingRole()
+                        {
+                            Title = txtTitle.Text
+                        };
+
+                        db.VoiceActingRoles.Add(role);
+                        db.SaveChanges();
+                        loadData();
+                    });
+                }
+            });
+        }
+
+        public async void UpdateVoiceRole()
+        {
+            await Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+
+                        VoiceActingRole vr = voiceActingRoles[VoiceRoleList.SelectedIndex];
+                        VoiceActingRole voiceActingRole = db.VoiceActingRoles
+                        .FirstOrDefault(x => x.IdVoiceActingRole == vr.IdVoiceActingRole);
+
+                        voiceActingRole.Title = txtTitle.Text;
+
+                        db.SaveChanges();
+                        loadData();
+                    });
+                }
+            });
+        }
+
+        public async void DaleteVoiceRole()
+        {
+            await Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+
+                        VoiceActingRole vr = voiceActingRoles[VoiceRoleList.SelectedIndex];
+                        VoiceActingRole voiceActingRole = db.VoiceActingRoles
+                        .FirstOrDefault(x => x.IdVoiceActingRole == vr.IdVoiceActingRole);
+
+                        db.VoiceActingRoles.Remove(voiceActingRole);
+                        db.SaveChanges();
+                        loadData();
+                    });
+                }
+            });
+        }
+
+        public async void loadData()
+        {
+            await Task.Run(() =>
+            {
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        var voiceActingRoles = db.VoiceActingRoles.ToList();
+                        this.voiceActingRoles.Clear();
+                        foreach (var vr in voiceActingRoles)
+                        {
+                            this.voiceActingRoles.Add(vr);
+                        }
+                    });
+                }
+            });
 
         }
     }

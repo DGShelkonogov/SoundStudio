@@ -57,8 +57,6 @@ namespace Zvuki.Pages.Register
                         {
                             if (human.Login.Equals(txtLogin.Text) && human.Password.Equals(txtPassword.Password))
                             {
-                           
-
                                 foreach (var client in clients)
                                 {
                                     if (client.Human.Login.Equals(human.Login))

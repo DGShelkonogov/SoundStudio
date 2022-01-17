@@ -18,10 +18,30 @@
         <ListView Name="ResultList" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=Title}">Candidate</GridViewColumn>
+                    <GridViewColumn Header="Candidate">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Grid>
+                                        <Label Content="{Binding Path=Candidate.Client.Human.Surname}"/>
+                                    </Grid>
+                                    <Grid>
+                                        <Label Content="{Binding Path=Candidate.Client.Human.Name}"/>
+                                    </Grid>
+                                    <Grid>
+                                        <Label Content="{Binding Path=Candidate.Client.Human.Patronomic}"/>
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Scores}">Scores</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ResultTitle}">ResultTitle</GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+        
         <Label Grid.Column="1" Content="New result" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtScores" Grid.Column="1" HorizontalAlignment="Left" Margin="10,131,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Grid.Column="1" Content="Scores" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top"/>
@@ -29,7 +49,7 @@
         <Button Grid.Column="1" Content="Update" HorizontalAlignment="Left" Margin="115,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
         <Button Grid.Column="1" Content="Delete" HorizontalAlignment="Left" Margin="220,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
         <Label Grid.Column="1" Content="Candidate" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cmpCandidate" Grid.Column="1" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cmpCandidate" DisplayMemberPath="Candidate.Client.Human.Name" Grid.Column="1" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Grid.Column="1" Content="Result" HorizontalAlignment="Left" Margin="11,154,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtResultTitle" Grid.Column="1" HorizontalAlignment="Left" Margin="10,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
     </Grid>

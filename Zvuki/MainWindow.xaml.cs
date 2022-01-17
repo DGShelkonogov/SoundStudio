@@ -9,7 +9,8 @@ namespace Zvuki
     {
         
 
-        ArrayList list = new ArrayList() { "Accountant", "Advertiser", "ClientPages", "HR", "Manager", "Сleaner" };
+        ArrayList list = new ArrayList() 
+        { "Accountant", "Advertiser", "ClientPages", "HR", "Manager", "Сleaner" };
         Grid[] grids = new Grid[6];
 
 
@@ -37,6 +38,9 @@ namespace Zvuki
         private void cmbRoles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GridVisibility(cmbRoles.SelectedIndex);
+
+            GridAccountant.Visibility = Visibility.Visible;
+            GridAccountant.Visibility = Visibility.Hidden;
         }
 
         public void GridVisibility(int index)

@@ -100,6 +100,9 @@
                 <Button Content="Candidates" Tag="CreateCandidatePage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
                 <Button Content="Results" Tag="CreateResultPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
                 <Button Content="Voice role" Tag="VoiceActingRolePage" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Equipment" Tag="EquipmentPage" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="event cleaning" Tag="CreateCleanerPage" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Recording rooms" Tag="CreateRecordingRoomPage" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
             </Grid>
 
 

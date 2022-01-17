@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,6 @@ namespace Zvuki.Models
         public int IdAudioRecording { get; set; }
         string path;
         DateTime dateOfCreate;
-        RecordingRoom recordingRoom;
 
 
         public string Path
@@ -26,6 +26,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Path");
             }
         }
+        [Column(TypeName = "Date")]
         public DateTime DateOfCreate
         {
             get { return dateOfCreate; }
@@ -33,15 +34,6 @@ namespace Zvuki.Models
             {
                 dateOfCreate = value;
                 OnPropertyChanged("DateOfCreate");
-            }
-        }
-        public virtual RecordingRoom RecordingRoom
-        {
-            get { return recordingRoom; }
-            set
-            {
-                recordingRoom = value;
-                OnPropertyChanged("RecordingRoom");
             }
         }
 

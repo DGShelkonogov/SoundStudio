@@ -15,35 +15,35 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zvuki.Models;
 
-namespace Zvuki.Pages.Advertiser
+namespace Zvuki.Pages.Manager
 {
-    public partial class AdTypePage : Page
+    /// <summary>
+    /// Логика взаимодействия для EquipmentPage.xaml
+    /// </summary>
+    public partial class EquipmentPage : Page
     {
-        ObservableCollection<AdType> adTypes = new ObservableCollection<AdType>();
-        public AdTypePage()
+
+        ObservableCollection<Equipment> equipments = new ObservableCollection<Equipment>();
+        public EquipmentPage()
         {
             InitializeComponent();
             loadData();
-            AdTypeList.ItemsSource = adTypes;
+            EquipmentsList.ItemsSource = equipments;
         }
 
         private void Button_Click_Add(object sender, RoutedEventArgs e)
-        {
-            CreateAdType();
-        }
+            => CreateEquipment();
+        
 
         private void Button_Click_Update(object sender, RoutedEventArgs e)
-        {
-            UpdateAdType();
-        }
-
-        private void Button_Click_Delete(object sender, RoutedEventArgs e)
-        {
-            DaleteAdType();
-        }
+            => UpdateEquipment();
+        
 
 
-        public async void CreateAdType()
+        private void Button_Click_Delete(object sender, RoutedEventArgs e) 
+            => DaleteEquipment();
+        
+        public async void CreateEquipment()
         {
             await Task.Run(() =>
             {
@@ -52,12 +52,14 @@ namespace Zvuki.Pages.Advertiser
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
 
-                        AdType adType = new AdType
+                        Equipment equipment = new Equipment()
                         {
+                            Amount = Convert.ToInt32(txtAmount.Text),
+                            Price = Convert.ToInt32(txtPrice.Text),
                             Title = txtTitle.Text
                         };
 
-                        db.AdTypes.Add(adType);
+                        db.Equipments.Add(equipment);
                         db.SaveChanges();
                         loadData();
                     });
@@ -65,7 +67,7 @@ namespace Zvuki.Pages.Advertiser
             });
         }
 
-        public async void UpdateAdType()
+        public async void UpdateEquipment()
         {
             await Task.Run(() =>
             {
@@ -73,10 +75,16 @@ namespace Zvuki.Pages.Advertiser
                 {
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        AdType at = adTypes[AdTypeList.SelectedIndex];
-                        AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
+                        Equipment eq = equipments[EquipmentsList.SelectedIndex];
+                        Equipment equipment = db.Equipments
+                        .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
 
-                        adType.Title = txtTitle.Text;
+
+                        equipment.Amount = Convert.ToInt32(txtAmount.Text);
+                        equipment.Price = Convert.ToInt32(txtPrice.Text);
+                        equipment.Title = txtTitle.Text;
+                        
+
                         db.SaveChanges();
                         loadData();
                     });
@@ -84,7 +92,7 @@ namespace Zvuki.Pages.Advertiser
             });
         }
 
-        public async void DaleteAdType()
+        public async void DaleteEquipment()
         {
             await Task.Run(() =>
             {
@@ -92,9 +100,11 @@ namespace Zvuki.Pages.Advertiser
                 {
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        AdType at = adTypes[AdTypeList.SelectedIndex];
-                        AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
-                        db.AdTypes.Remove(adType);
+                        Equipment eq = equipments[EquipmentsList.SelectedIndex];
+                        Equipment equipment = db.Equipments
+                        .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
+
+                        db.Equipments.Remove(equipment);
                         db.SaveChanges();
                         loadData();
                     });
@@ -112,15 +122,17 @@ namespace Zvuki.Pages.Advertiser
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
 
-                        var adTypes = db.AdTypes.ToList();
-                        this.adTypes.Clear();
-                        foreach (var adT in adTypes)
+                        var equipments = db.Equipments.ToList();
+                        this.equipments.Clear();
+                        foreach (var vr in equipments)
                         {
-                            this.adTypes.Add(adT);
+                            this.equipments.Add(vr);
                         }
                     });
                 }
             });
+
         }
+
     }
 }

@@ -72,7 +72,6 @@ namespace Zvuki.Pages.Accountant
                         // добавляем их в бд
                         db.PaymentAccounts.Add(payment);
                         db.SaveChanges();
-                        paymentAccounts.Add(payment);
                         loadData();
                     });
                 }
@@ -150,7 +149,6 @@ namespace Zvuki.Pages.Accountant
                     });
                 }
             });
-
         }
     }
 }

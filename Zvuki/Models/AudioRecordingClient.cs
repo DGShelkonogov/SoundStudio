@@ -13,7 +13,6 @@ namespace Zvuki.Models
         [Key]
         public int IdAudioRecordingClient { get; set; }
         AudioRecording audioRecording;
-        Client client;
         Copyright copyright;
 
         public virtual AudioRecording AudioRecording
@@ -25,15 +24,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("AudioRecording");
             }
         }
-        public virtual Client Client
-        {
-            get { return client; }
-            set
-            {
-                client = value;
-                OnPropertyChanged("Client");
-            }
-        }
+        
         public virtual Copyright Copyright
         {
             get { return copyright; }

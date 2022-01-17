@@ -15,35 +15,33 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zvuki.Models;
 
-namespace Zvuki.Pages.Advertiser
+namespace Zvuki.Pages.Manager
 {
-    public partial class AdTypePage : Page
+    /// <summary>
+    /// Логика взаимодействия для CreateRecordingRoomPage.xaml
+    /// </summary>
+    public partial class CreateRecordingRoomPage : Page
     {
-        ObservableCollection<AdType> adTypes = new ObservableCollection<AdType>();
-        public AdTypePage()
+        ObservableCollection<RecordingRoom> recordingRooms = new ObservableCollection<RecordingRoom>();
+
+        public CreateRecordingRoomPage()
         {
             InitializeComponent();
+            RecordingRoomList.ItemsSource = recordingRooms;
             loadData();
-            AdTypeList.ItemsSource = adTypes;
         }
 
-        private void Button_Click_Add(object sender, RoutedEventArgs e)
-        {
-            CreateAdType();
-        }
+        private void Button_Click_Add(object sender, RoutedEventArgs e) =>
+            Create();
 
-        private void Button_Click_Update(object sender, RoutedEventArgs e)
-        {
-            UpdateAdType();
-        }
+        private void Button_Click_Update(object sender, RoutedEventArgs e) =>
+            Update();
 
-        private void Button_Click_Delete(object sender, RoutedEventArgs e)
-        {
-            DaleteAdType();
-        }
+        private void Button_Click_Delete(object sender, RoutedEventArgs e) =>
+            Delete();
 
 
-        public async void CreateAdType()
+        public async void Create()
         {
             await Task.Run(() =>
             {
@@ -51,13 +49,12 @@ namespace Zvuki.Pages.Advertiser
                 {
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
-
-                        AdType adType = new AdType
+                        RecordingRoom recording = new RecordingRoom
                         {
-                            Title = txtTitle.Text
+                            RoomNumber = txtNumber.Text
                         };
 
-                        db.AdTypes.Add(adType);
+                        db.RecordingRooms.Add(recording);
                         db.SaveChanges();
                         loadData();
                     });
@@ -65,7 +62,7 @@ namespace Zvuki.Pages.Advertiser
             });
         }
 
-        public async void UpdateAdType()
+        public async void Update()
         {
             await Task.Run(() =>
             {
@@ -73,10 +70,12 @@ namespace Zvuki.Pages.Advertiser
                 {
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        AdType at = adTypes[AdTypeList.SelectedIndex];
-                        AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
+                        RecordingRoom rc = recordingRooms[RecordingRoomList.SelectedIndex];
+                        RecordingRoom recording = db.RecordingRooms
+                        .FirstOrDefault(x => x.IdRecordingRoom == rc.IdRecordingRoom);
 
-                        adType.Title = txtTitle.Text;
+                        recording.RoomNumber = txtNumber.Text;
+
                         db.SaveChanges();
                         loadData();
                     });
@@ -84,7 +83,7 @@ namespace Zvuki.Pages.Advertiser
             });
         }
 
-        public async void DaleteAdType()
+        public async void Delete()
         {
             await Task.Run(() =>
             {
@@ -92,9 +91,11 @@ namespace Zvuki.Pages.Advertiser
                 {
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        AdType at = adTypes[AdTypeList.SelectedIndex];
-                        AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
-                        db.AdTypes.Remove(adType);
+                        RecordingRoom rc = recordingRooms[RecordingRoomList.SelectedIndex];
+                        RecordingRoom recording = db.RecordingRooms
+                        .FirstOrDefault(x => x.IdRecordingRoom == rc.IdRecordingRoom);
+                        
+                        db.RecordingRooms.Remove(recording);
                         db.SaveChanges();
                         loadData();
                     });
@@ -112,15 +113,16 @@ namespace Zvuki.Pages.Advertiser
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
 
-                        var adTypes = db.AdTypes.ToList();
-                        this.adTypes.Clear();
-                        foreach (var adT in adTypes)
+                        var recordingRooms = db.RecordingRooms.ToList();
+                        this.recordingRooms.Clear();
+                        foreach (var adT in recordingRooms)
                         {
-                            this.adTypes.Add(adT);
+                            this.recordingRooms.Add(adT);
                         }
                     });
                 }
             });
+
         }
     }
 }

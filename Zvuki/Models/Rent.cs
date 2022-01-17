@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,9 @@ namespace Zvuki.Models
         DateTime startDate, endDate;
         int amount, price;
         Equipment equipment;
+        Client client;
 
+        [Column(TypeName = "Date")]
         public DateTime StartDate
         {
             get { return startDate; }
@@ -26,6 +29,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("StartDate");
             }
         }
+        [Column(TypeName = "Date")]
         public DateTime EndDate
         {
             get { return endDate; }
@@ -60,6 +64,16 @@ namespace Zvuki.Models
             {
                 equipment = value;
                 OnPropertyChanged("Equipment");
+            }
+        }
+
+        public virtual Client Client
+        {
+            get { return client; }
+            set
+            {
+                client = value;
+                OnPropertyChanged("Client");
             }
         }
 

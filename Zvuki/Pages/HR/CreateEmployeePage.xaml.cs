@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -226,19 +227,12 @@ namespace Zvuki.Pages.HR
                     App.Current.Dispatcher.Invoke((Action)delegate
                     {
                         Employee e = employees[EmployeeList.SelectedIndex];
-                        Employee employee = db.Employees.FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
+                        Employee employee = db.Employees
+                        .Include(x => x.Human)
+                        .Include(x => x.BankAccount)
+                        .Include(x => x.Positions)
+                        .FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
 
-                        db.Entry(employee)
-                           .Reference(c => c.Human)
-                           .Load();
-
-                        db.Entry(employee)
-                     .Reference(c => c.BankAccount)
-                     .Load();
-
-                        db.Entry(employee)
-                     .Collection(c => c.Positions)
-                     .Load();
                         db.Employees.Remove(employee);
 
                         db.SaveChanges();

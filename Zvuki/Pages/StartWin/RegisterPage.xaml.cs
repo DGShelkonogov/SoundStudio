@@ -63,7 +63,8 @@ namespace Zvuki.Pages
                         Client client = new Client
                         {
                             AmountMoney = 0,
-                            Human = human
+                            Human = human,
+                            AudioRecordingClients = new List<AudioRecordingClient>()
                         };
 
                         // добавляем их в бд

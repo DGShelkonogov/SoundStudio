@@ -122,7 +122,6 @@ namespace Zvuki.Pages.Accountant
                         // добавляем их в бд
                         db.Contracts.Add(contract);
                         db.SaveChanges();
-                        contracts.Add(contract);
                         loadData();
                     });
                 }
