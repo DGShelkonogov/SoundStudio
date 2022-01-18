@@ -49,8 +49,6 @@ namespace Zvuki
                 if(client != null)
                 {
                     dictionaryPositions.Add("ClientPages", dictionaryAllPositions["ClientPages"]);
-                    dictionaryPositions.Add("HR", dictionaryAllPositions["HR"]);
-                    dictionaryPositions.Add("Advertiser", dictionaryAllPositions["Advertiser"]);
                 }
                 if(employee != null)
                 {

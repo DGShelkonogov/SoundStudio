@@ -60,7 +60,7 @@ namespace Zvuki.Pages.Manager
 
                             Cleaning cleaning = new Cleaning
                             {
-                                DateTime = dtpDate.DisplayDate,
+                                DateTime = (DateTime)dtpDate.SelectedDate,
                                 Employee = db.Employees
                                 .FirstOrDefault(x => x.IdEmployee == e.IdEmployee),
                                 RecordingRoom = db.RecordingRooms
@@ -101,7 +101,7 @@ namespace Zvuki.Pages.Manager
                             Employee e = cmbEmployees.SelectedItem as Employee;
                             RecordingRoom r = cmbRecordingRoom.SelectedItem as RecordingRoom;
 
-                            cleaning.DateTime = dtpDate.DisplayDate;
+                            cleaning.DateTime = (DateTime)dtpDate.SelectedDate;
                             cleaning.Employee = db.Employees
                                 .FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
                             cleaning.RecordingRoom = db.RecordingRooms

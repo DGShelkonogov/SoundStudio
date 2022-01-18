@@ -17,7 +17,7 @@ namespace Zvuki.Models
         string title;
 
         [Required]
-        [StringLength(3, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         public string Title
         {
             get { return title; }

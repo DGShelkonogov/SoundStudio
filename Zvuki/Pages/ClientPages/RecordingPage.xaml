@@ -36,11 +36,11 @@
             </ListView.View>
         </ListView>
 
-        <Label Content="New recording" FontSize="20" HorizontalAlignment="Left" Margin="245,10,0,0" VerticalAlignment="Top"/>
-        <Button Content="upload" HorizontalAlignment="Left" Margin="247,88,0,0" VerticalAlignment="Top" Height="30" Width="70" Click="Button_Click_Upload_Recording"/>
-        <Label x:Name="txtTitle" Content="Title" HorizontalAlignment="Left" Margin="247,57,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="txtCopyright" Content="Copyright" HorizontalAlignment="Left" Margin="247,123,0,0" VerticalAlignment="Top"/>
-        <Button Content="upload" HorizontalAlignment="Left" Margin="247,149,0,0" VerticalAlignment="Top" Height="30" Width="70" Click="Button_Click_Upload_Copyright"/>
+        <Label Content="New recording" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Button Content="upload"  Grid.Column="1" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="30" Width="70" Click="Button_Click_Upload_Recording"/>
+        <Label x:Name="txtTitle" Content="Title" Grid.Column="1" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="txtCopyright" Content="Copyright" Grid.Column="1" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top"/>
+        <Button Content="upload" HorizontalAlignment="Left" Grid.Column="1" Margin="10,149,0,0" VerticalAlignment="Top" Height="30" Width="70" Click="Button_Click_Upload_Copyright"/>
 
     </Grid>
 </Page>

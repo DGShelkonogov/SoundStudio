@@ -19,9 +19,6 @@ using Zvuki.Models;
 
 namespace Zvuki.Pages.HR
 {
-    /// <summary>
-    /// Логика взаимодействия для CreateEmployeePage.xaml
-    /// </summary>
     public partial class CreateEmployeePage : Page
     {
         bool addEmployee = true, updateEmployee = true;
@@ -47,12 +44,13 @@ namespace Zvuki.Pages.HR
         {
             if (addEmployee)
             {
-                
-                clearForm();
-               
+                //addEmployee = false;
+                if (clearForm())
+                    blockBtnCreate();
             }
             else
             {
+               
                 CreateEmployee();
             }
 
@@ -62,12 +60,15 @@ namespace Zvuki.Pages.HR
         {
             if (updateEmployee)
             {
-               
-                fillTextBoxs();
-               
+                //updateEmployee = false;
+                if (fillTextBoxs())
+                {
+                    blockBtnUpdate();
+                }
             }
             else
             {
+                
                 UpdateEmployee();
             }
         }
@@ -80,6 +81,11 @@ namespace Zvuki.Pages.HR
         {
             addEmployee = true;
             updateEmployee = true;
+
+            btnAdd.IsEnabled = true;
+            btnUpdate.IsEnabled = true;
+            btnDelete.IsEnabled = true;
+
             positions.Clear();
             clearForm();
             createEmployeeGrid.Visibility = Visibility.Hidden;
@@ -96,77 +102,94 @@ namespace Zvuki.Pages.HR
                     {
                         App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            bool isNewLogin = true;
-                            Human mainHuman = new Human();
-                            var humans = db.Humans.ToList();
-                            foreach (var human in humans)
+                            if (txtPassword.Password.Equals(txtRepeatPassword.Password))
                             {
-                                if (human.Login.Equals(txtLogin.Text))
+                                if ((DateTime)dpDateOfBirth.SelectedDate < DateTime.Now)
                                 {
-                                    isNewLogin = false;
-                                    mainHuman = human;
-                                    break;
+                                    bool isNewLogin = true;
+                                    Human mainHuman = new Human();
+                                    var humans = db.Humans.ToList();
+                                    foreach (var human in humans)
+                                    {
+                                        if (human.Login.Equals(txtLogin.Text))
+                                        {
+                                            isNewLogin = false;
+                                            mainHuman = human;
+                                            break;
+                                        }
+                                    }
+
+                                    if (isNewLogin)
+                                    {
+                                        mainHuman = new Human
+                                        {
+                                            Name = txtName.Text,
+                                            Surname = txtSurname.Text,
+                                            Patronomic = txtPatronymic.Text,
+                                            Phone = txtPhone.Text,
+                                            Password = txtPassword.Password,
+                                            DateOfBirth = (DateTime)dpDateOfBirth.SelectedDate,
+                                            Email = txtEmail.Text,
+                                            Login = txtLogin.Text,
+                                            isAdmin = false
+                                        };
+                                    }
+
+                                    BankAccount account = new BankAccount
+                                    {
+                                        Bank = txtBankName.Text,
+                                        Bik = txtBIC.Text,
+                                        INN = txtTINOfTheBank.Text,
+                                        KorAccount = txtCorrespondentAccount.Text,
+                                        KPP = txtCOR.Text,
+                                        Number = txtNumber.Text
+                                    };
+
+                                    Employee employee = new Employee
+                                    {
+                                        Human = mainHuman,
+                                        BankAccount = account,
+                                        INN = txtTIN.Text,
+                                        SNILS = txtSNILS.Text,
+                                        Positions = new List<Position>()
+                                    };
+
+                                    foreach (Position position in positions)
+                                    {
+                                        Position p = db.Positions
+                                        .FirstOrDefault(x => x.IdPosition == position.IdPosition);
+                                        employee.Positions.Add(p);
+                                    }
+                                    if (MainWindow.validData(employee) &&
+                                        MainWindow.validData(mainHuman) &&
+                                        MainWindow.validData(account)
+                                    )
+                                    {
+                                        db.Employees.Add(employee);
+                                        db.SaveChanges();
+                                        loadData();
+
+                                        btnAdd.IsEnabled = true;
+                                        btnUpdate.IsEnabled = true;
+                                        btnDelete.IsEnabled = true;
+
+
+                                        addEmployee = true;
+
+                                        createEmployeeGrid.Visibility = Visibility.Hidden;
+                                        EmployeeList.Visibility = Visibility.Visible;
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("invalid date of birth");
+
                                 }
                             }
-
-                            if (isNewLogin)
+                            else
                             {
-                                mainHuman = new Human
-                                {
-                                    Name = txtName.Text,
-                                    Surname = txtSurname.Text,
-                                    Patronomic = txtPatronymic.Text,
-                                    Phone = txtPhone.Text,
-                                    Password = txtPassword.Text,
-                                    DateOfBirth = (DateTime)dpDateOfBirth.SelectedDate,
-                                    Email = txtEmail.Text,
-                                    Login = txtLogin.Text,
-                                    isAdmin = false
-                                };
+                                MessageBox.Show("Password doesn't match");
                             }
-
-                            BankAccount account = new BankAccount
-                            {
-                                Bank = txtBankName.Text,
-                                Bik = txtBIC.Text,
-                                INN = txtTINOfTheBank.Text,
-                                KorAccount = txtCorrespondentAccount.Text,
-                                KPP = txtCOR.Text,
-                                Number = txtNumber.Text
-                            };
-
-                            Employee employee = new Employee
-                            {
-                                Human = mainHuman,
-                                BankAccount = account,
-                                INN = txtTIN.Text,
-                                SNILS = txtSNILS.Text,
-                                Positions = new List<Position>()
-                            };
-
-                            foreach (Position position in positions)
-                            {
-                                Position p = db.Positions
-                                .FirstOrDefault(x => x.IdPosition == position.IdPosition);
-                                employee.Positions.Add(p);
-                            }
-                            if (MainWindow.validData(employee) &&
-                                MainWindow.validData(mainHuman) &&
-                                MainWindow.validData(account)
-                            )
-                            {
-                                db.Employees.Add(employee);
-                                db.SaveChanges();
-                                loadData();
-
-                                addEmployee = true;
-
-                                createEmployeeGrid.Visibility = Visibility.Hidden;
-                                EmployeeList.Visibility = Visibility.Visible;
-                            }
-                           
-
-
                         });
                     }
                     catch (Exception ex)
@@ -190,52 +213,73 @@ namespace Zvuki.Pages.HR
                     {
                         App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            Employee e = EmployeeList.SelectedItem as Employee;
-                            Employee employee = db.Employees
-                            .Include(x => x.Human)
-                            .Include(x => x.BankAccount)
-                            .Include(x => x.Positions)
-                            .FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
-
-
-                            employee.Human.Name = txtName.Text;
-                            employee.Human.Surname = txtSurname.Text;
-                            employee.Human.Patronomic = txtPatronymic.Text;
-                            employee.Human.Phone = txtPhone.Text;
-                            employee.Human.Password = txtPassword.Text;
-                            employee.Human.DateOfBirth = (DateTime)dpDateOfBirth.SelectedDate;
-                            employee.Human.Email = txtEmail.Text;
-                            employee.Human.Login = txtLogin.Text;
-                            employee.BankAccount.Bank = txtBankName.Text;
-                            employee.BankAccount.Bik = txtBIC.Text;
-                            employee.BankAccount.INN = txtTINOfTheBank.Text;
-                            employee.BankAccount.KorAccount = txtCorrespondentAccount.Text;
-                            employee.BankAccount.KPP = txtCOR.Text;
-                            employee.BankAccount.Number = txtNumber.Text;
-                            employee.INN = txtTIN.Text;
-                            employee.SNILS = txtSNILS.Text;
-                            employee.Positions.Clear();
-
-                            foreach (Position position in positions)
+                            if (txtPassword.Password.Equals(txtRepeatPassword.Password))
                             {
-                                Position p = db.Positions
-                                .FirstOrDefault(x => x.IdPosition == position.IdPosition);
-                                employee.Positions.Add(p);
-                            }
+                                if ((DateTime)dpDateOfBirth.SelectedDate < DateTime.Now)
+                                {
+                                    Employee e = EmployeeList.SelectedItem as Employee;
+                                    Employee employee = db.Employees
+                                    .Include(x => x.Human)
+                                    .Include(x => x.BankAccount)
+                                    .Include(x => x.Positions)
+                                    .FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
 
-                            if (MainWindow.validData(employee) &&
-                                MainWindow.validData(employee.Human) &&
-                                MainWindow.validData(employee.BankAccount)
-                            )
+
+                                    employee.Human.Name = txtName.Text;
+                                    employee.Human.Surname = txtSurname.Text;
+                                    employee.Human.Patronomic = txtPatronymic.Text;
+                                    employee.Human.Phone = txtPhone.Text;
+                                    employee.Human.Password = txtPassword.Password;
+                                    employee.Human.DateOfBirth = (DateTime)dpDateOfBirth.SelectedDate;
+                                    employee.Human.Email = txtEmail.Text;
+                                    employee.Human.Login = txtLogin.Text;
+                                    employee.BankAccount.Bank = txtBankName.Text;
+                                    employee.BankAccount.Bik = txtBIC.Text;
+                                    employee.BankAccount.INN = txtTINOfTheBank.Text;
+                                    employee.BankAccount.KorAccount = txtCorrespondentAccount.Text;
+                                    employee.BankAccount.KPP = txtCOR.Text;
+                                    employee.BankAccount.Number = txtNumber.Text;
+                                    employee.INN = txtTIN.Text;
+                                    employee.SNILS = txtSNILS.Text;
+                                    employee.Positions.Clear();
+
+                                    foreach (Position position in positions)
+                                    {
+                                        Position p = db.Positions
+                                        .FirstOrDefault(x => x.IdPosition == position.IdPosition);
+                                        employee.Positions.Add(p);
+                                    }
+
+                                    if (MainWindow.validData(employee) &&
+                                        MainWindow.validData(employee.Human) &&
+                                        MainWindow.validData(employee.BankAccount)
+                                    )
+                                    {
+                                        updateEmployee = true;
+
+                                        btnAdd.IsEnabled = true;
+                                        btnUpdate.IsEnabled = true;
+                                        btnDelete.IsEnabled = true;
+
+
+                                        createEmployeeGrid.Visibility = Visibility.Hidden;
+                                        EmployeeList.Visibility = Visibility.Visible;
+
+                                        db.SaveChanges();
+                                        loadData();
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("invalid date of birth");
+                                }
+                               
+                            }
+                            else
                             {
-                               updateEmployee = true;
-
-                                createEmployeeGrid.Visibility = Visibility.Hidden;
-                                EmployeeList.Visibility = Visibility.Visible;
-
-                                db.SaveChanges();
-                                loadData();
+                                MessageBox.Show("Password doesn't match");
                             }
+                           
                         });
                     }
                     catch (Exception ex)
@@ -339,7 +383,7 @@ namespace Zvuki.Pages.HR
             }
         }
 
-        public void fillTextBoxs()
+        public bool fillTextBoxs()
         {
             try
             {
@@ -348,7 +392,7 @@ namespace Zvuki.Pages.HR
                 txtSurname.Text = employee.Human.Surname;
                 txtPatronymic.Text = employee.Human.Patronomic;
                 txtPhone.Text = employee.Human.Phone;
-                txtPassword.Text = employee.Human.Password;
+                txtPassword.Password = employee.Human.Password;
                 dpDateOfBirth.SelectedDate = employee.Human.DateOfBirth;
                 txtEmail.Text = employee.Human.Email;
                 txtLogin.Text = employee.Human.Login;
@@ -369,14 +413,16 @@ namespace Zvuki.Pages.HR
                 createEmployeeGrid.Visibility = Visibility.Visible;
                 EmployeeList.Visibility = Visibility.Hidden;
                 updateEmployee = false;
+                return true;
             }
             catch (Exception ex)
             {
 
             }
+            return false;
         }
 
-        public void clearForm()
+        public bool clearForm()
         {
             try
             {
@@ -386,9 +432,9 @@ namespace Zvuki.Pages.HR
                 txtSurname.Text = "";
                 txtPatronymic.Text = "";
                 txtPhone.Text = "";
-                txtPassword.Text = "";
-                txtRepeatPassword.Text = "";
-                dpDateOfBirth.DisplayDate = new DateTime();
+                txtPassword.Password = "";
+                txtRepeatPassword.Password = "";
+                dpDateOfBirth.DisplayDate = DateTime.Now;
                 txtEmail.Text = "";
                 txtLogin.Text = "";
                 txtBankName.Text = "";
@@ -402,12 +448,29 @@ namespace Zvuki.Pages.HR
                 createEmployeeGrid.Visibility = Visibility.Visible;
                 EmployeeList.Visibility = Visibility.Hidden;
                 addEmployee = false;
+                return true;
+
 
             }
             catch (Exception ex)
             {
 
             }
+            return false;
+        }
+
+        public void blockBtnCreate()
+        {
+            btnAdd.IsEnabled = true;
+            btnUpdate.IsEnabled = false;
+            btnDelete.IsEnabled = false;
+        }
+
+        public void blockBtnUpdate()
+        {
+            btnAdd.IsEnabled = false;
+            btnUpdate.IsEnabled = true;
+            btnDelete.IsEnabled = false;
         }
     }
 }

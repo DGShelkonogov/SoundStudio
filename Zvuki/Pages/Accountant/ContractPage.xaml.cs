@@ -25,9 +25,6 @@ using NPOI.SS.Formula.Functions;
 
 namespace Zvuki.Pages.Accountant
 {
-    /// <summary>
-    /// Логика взаимодействия для ContractPage.xaml
-    /// </summary>
     public partial class ContractPage : Page
     {
         ArrayList list = new ArrayList();

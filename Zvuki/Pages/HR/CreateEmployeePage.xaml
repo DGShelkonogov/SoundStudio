@@ -36,9 +36,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add"/>
-        <Button Content="Update" HorizontalAlignment="Left" Margin="115,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="220,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="10,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="115,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="220,5,0,0" Grid.Row="1" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
 
 
 
@@ -70,11 +70,11 @@
             <Label Content="Login" HorizontalAlignment="Left" Margin="200,59,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtLogin" HorizontalAlignment="Left" Margin="200,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
-            <Label Content="Password" HorizontalAlignment="Left" Margin="200,103,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="200,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <Label  Content="Password" HorizontalAlignment="Left" Margin="200,103,0,0" VerticalAlignment="Top"/>
+            <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="200,129,0,0"  VerticalAlignment="Top" Width="120"/>
 
             <Label Content="Repeat password" HorizontalAlignment="Left" Margin="200,147,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtRepeatPassword" HorizontalAlignment="Left" Margin="200,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <PasswordBox x:Name="txtRepeatPassword" HorizontalAlignment="Left" Margin="200,173,0,0"  VerticalAlignment="Top" Width="120"/>
 
             <DatePicker x:Name="dpDateOfBirth" HorizontalAlignment="Left" Margin="200,216,0,0" VerticalAlignment="Top"/>
             <Label Content="Date of birth" HorizontalAlignment="Left" Margin="200,191,0,0" VerticalAlignment="Top"/>

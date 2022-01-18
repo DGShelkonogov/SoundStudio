@@ -47,33 +47,43 @@ namespace Zvuki.Pages.ClientPages
                     {
                          App.Current.Dispatcher.Invoke((Action)delegate
                     {
-                        Client client = DataLoader.getClient();
-
-                        Equipment eq = cmbEquipment.SelectedItem as Equipment;
-                        Equipment equipment = db.Equipments
-                           .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
-                        int amount = Convert.ToInt32(txtAmount.Text);
-
-                        equipment.Amount -= amount;
-
-                        Rent rent = new Rent
+                        if ((DateTime)dpFrom.SelectedDate >= DateTime.Now &&
+                        (DateTime)dpTo.SelectedDate >= (DateTime)dpFrom.SelectedDate)
                         {
-                            Amount = Convert.ToInt32(txtAmount.Text),
-                            Price = eq.Price * amount,
-                            StartDate = dpFrom.DisplayDate,
-                            EndDate = dpTo.DisplayDate,
-                            Equipment = db.Equipments
-                            .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment),
-                            Client = db.Clients
-                            .FirstOrDefault(x => x.IdClient == client.IdClient)
-                        };
 
-                        if (MainWindow.validData(rent))
-                        {
-                            db.Rents.Add(rent);
-                            db.SaveChanges();
-                            loadData();
+                            Client client = DataLoader.getClient();
+
+                            Equipment eq = cmbEquipment.SelectedItem as Equipment;
+                            Equipment equipment = db.Equipments
+                               .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
+                            int amount = Convert.ToInt32(txtAmount.Text);
+
+                            equipment.Amount -= amount;
+
+                            Rent rent = new Rent
+                            {
+                                Amount = Convert.ToInt32(txtAmount.Text),
+                                Price = eq.Price * amount,
+                                StartDate = dpFrom.DisplayDate,
+                                EndDate = dpTo.DisplayDate,
+                                Equipment = db.Equipments
+                                .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment),
+                                Client = db.Clients
+                                .FirstOrDefault(x => x.IdClient == client.IdClient)
+                            };
+
+                            if (MainWindow.validData(rent))
+                            {
+                                db.Rents.Add(rent);
+                                db.SaveChanges();
+                                loadData();
+                            }
                         }
+                        else
+                        {
+                            MessageBox.Show("invalid date");
+                        }
+
                     });
                     }
                     catch (Exception ex)

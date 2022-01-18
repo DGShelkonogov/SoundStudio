@@ -86,7 +86,7 @@ public partial class CreateCandidatePage : Page
 
                     if (MainWindow.validData(candidate))
                     {
-                        db.Candidates.Remove(candidate);
+                        db.Candidates.Add(candidate);
                         db.SaveChanges();
                         loadData();
                     }

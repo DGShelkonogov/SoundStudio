@@ -30,7 +30,6 @@ namespace Zvuki.Models
 
         [Required]
         [Range(1, 1000)]
-        [StringLength(50, MinimumLength = 3)]
         public int Amount
         {
             get { return amount; }
@@ -42,7 +41,6 @@ namespace Zvuki.Models
         }
         [Required]
         [Range(1, 1000)]
-        [StringLength(50, MinimumLength = 3)]
         public int Price 
         {
             get { return price; }

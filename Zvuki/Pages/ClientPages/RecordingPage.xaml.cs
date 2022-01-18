@@ -43,7 +43,7 @@ namespace Zvuki.Pages.ClientPages
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Docx files (*.docx)|*.docx|Text files (*.txt)|*.txt";
+                openFileDialog.Filter = "Sound (*.mp3)|*.mp3|Video (*.mp4)|*.mp4";
                 if (openFileDialog.ShowDialog() == true)
                 {
                     pathRecording = openFileDialog.FileName;

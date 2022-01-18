@@ -51,10 +51,10 @@
         <DatePicker x:Name="dpDateOfBirth" HorizontalAlignment="Left" Margin="10,31,0,0" Grid.Row="4" VerticalAlignment="Top"/>
 
         <Label Content="Password" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.474,0.924" Grid.Row="5"/>
-        <TextBox x:Name="txtPassword" HorizontalAlignment="Center" Margin="0,36,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="180"/>
+        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Center" Margin="0,36,0,0" Grid.Row="5"  VerticalAlignment="Top" Width="180"/>
 
         <Label Content="Repeat password" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.474,0.924" Grid.Row="5" Grid.Column="1"/>
-        <TextBox x:Name="txtRepeatPassword" HorizontalAlignment="Center" Margin="0,36,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Grid.Column="1"/>
+        <PasswordBox x:Name="txtRepeatPassword" HorizontalAlignment="Center" Margin="0,36,0,0" Grid.Row="5" VerticalAlignment="Top" Width="180" Grid.Column="1"/>
 
 
         <Button Content="Back" Grid.Row="7" Click="Button_Click_Back"/>

@@ -34,7 +34,7 @@ namespace Zvuki.Pages
 
         private void Button_Click_CreateAccount(object sender, RoutedEventArgs e)
         {
-            if (txtPassword.Text.Equals(txtRepeatPassword.Text))
+            if (txtPassword.Password.Equals(txtRepeatPassword.Password))
             {
                 CreateAccount();
             }
@@ -47,42 +47,49 @@ namespace Zvuki.Pages
                 {
                     try
                     {
-
-                        App.Current.Dispatcher.Invoke((Action)delegate
+                            App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            Human human = new Human
+                            if ((DateTime)dpDateOfBirth.SelectedDate < DateTime.Now)
                             {
-                                Name = txtName.Text,
-                                Surname = txtSurname.Text,
-                                Patronomic = txtPatronomic.Text,
-                                Phone = txtPhone.Text,
-                                Password = txtPassword.Text,
-                                DateOfBirth = dpDateOfBirth.DisplayDate,
-                                Email = txtEmail.Text,
-                                Login = txtLogin.Text,
-                                isAdmin = false
-                            };
+                                Human human = new Human
+                                {
+                                    Name = txtName.Text,
+                                    Surname = txtSurname.Text,
+                                    Patronomic = txtPatronomic.Text,
+                                    Phone = txtPhone.Text,
+                                    Password = txtPassword.Password,
+                                    DateOfBirth = dpDateOfBirth.DisplayDate,
+                                    Email = txtEmail.Text,
+                                    Login = txtLogin.Text,
+                                    isAdmin = false
+                                };
 
-                            Client client = new Client
-                            {
-                                AmountMoney = 0,
-                                Human = human,
-                                AudioRecordingClients = new List<AudioRecordingClient>()
-                            };
+                                Client client = new Client
+                                {
+                                    AmountMoney = 0,
+                                    Human = human,
+                                    AudioRecordingClients = new List<AudioRecordingClient>()
+                                };
 
-                            if (MainWindow.validData(human) && MainWindow.validData(client))
-                            {
-                                db.Clients.Add(client);
-                                db.SaveChanges();
+                                if (MainWindow.validData(human) && MainWindow.validData(client))
+                                {
+                                    db.Clients.Add(client);
+                                    db.SaveChanges();
 
-                                DataLoader.saveHuman(human);
-                                DataLoader.saveClient(client);
+                                    DataLoader.saveHuman(human);
+                                    DataLoader.saveClient(client);
 
-                                MainWindow window = new MainWindow();
-                                window.Show();
-                                StartWindow win = (StartWindow)Window.GetWindow(this);
-                                win.Close();
+                                    MainWindow window = new MainWindow();
+                                    window.Show();
+                                    StartWindow win = (StartWindow)Window.GetWindow(this);
+                                    win.Close();
+                                }
                             }
+                            else
+                            {
+                                MessageBox.Show("Invalide date");
+                            }
+                           
                         });
                     }
                     catch (Exception ex)
