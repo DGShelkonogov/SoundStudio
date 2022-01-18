@@ -52,17 +52,29 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        VoiceActingRole role = new VoiceActingRole()
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            Title = txtTitle.Text
-                        };
+                            VoiceActingRole voiceActingRole = new VoiceActingRole()
+                            {
+                                Title = txtTitle.Text
+                            };
 
-                        db.VoiceActingRoles.Add(role);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            if (MainWindow.validData(voiceActingRole))
+                            {
+                                db.VoiceActingRoles.Add(voiceActingRole);
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+
+                    }
+                   
                 }
             });
         }
@@ -73,18 +85,31 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
 
-                        VoiceActingRole vr = voiceActingRoles[VoiceRoleList.SelectedIndex];
-                        VoiceActingRole voiceActingRole = db.VoiceActingRoles
-                        .FirstOrDefault(x => x.IdVoiceActingRole == vr.IdVoiceActingRole);
+                            VoiceActingRole vr = voiceActingRoles[VoiceRoleList.SelectedIndex];
+                            VoiceActingRole voiceActingRole = db.VoiceActingRoles
+                            .FirstOrDefault(x => x.IdVoiceActingRole == vr.IdVoiceActingRole);
 
-                        voiceActingRole.Title = txtTitle.Text;
+                            voiceActingRole.Title = txtTitle.Text;
 
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            if (MainWindow.validData(voiceActingRole))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
+                   
                 }
             });
         }
@@ -95,17 +120,26 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
 
-                        VoiceActingRole vr = voiceActingRoles[VoiceRoleList.SelectedIndex];
-                        VoiceActingRole voiceActingRole = db.VoiceActingRoles
-                        .FirstOrDefault(x => x.IdVoiceActingRole == vr.IdVoiceActingRole);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
 
-                        db.VoiceActingRoles.Remove(voiceActingRole);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            VoiceActingRole vr = voiceActingRoles[VoiceRoleList.SelectedIndex];
+                            VoiceActingRole voiceActingRole = db.VoiceActingRoles
+                            .FirstOrDefault(x => x.IdVoiceActingRole == vr.IdVoiceActingRole);
+
+                            db.VoiceActingRoles.Remove(voiceActingRole);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
         }
@@ -116,18 +150,42 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        var voiceActingRoles = db.VoiceActingRoles.ToList();
-                        this.voiceActingRoles.Clear();
-                        foreach (var vr in voiceActingRoles)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.voiceActingRoles.Add(vr);
-                        }
-                    });
+                            var voiceActingRoles = db.VoiceActingRoles.ToList();
+                            this.voiceActingRoles.Clear();
+                            foreach (var vr in voiceActingRoles)
+                            {
+                                this.voiceActingRoles.Add(vr);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
 
         }
+
+        private void VoiceRoleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                VoiceActingRole vr = voiceActingRoles[VoiceRoleList.SelectedIndex];
+                txtTitle.Text = vr.Title;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }
+

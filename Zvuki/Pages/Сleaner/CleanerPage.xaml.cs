@@ -42,16 +42,26 @@ namespace Zvuki.Pages.Сleaner
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Cleaning c = cleanings[CleaningList.SelectedIndex];
-                        Cleaning cleaning = db.Cleanings
-                        .FirstOrDefault(x => x.IdCleaning == c.IdCleaning);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            Cleaning c = cleanings[CleaningList.SelectedIndex];
+                            Cleaning cleaning = db.Cleanings
+                            .FirstOrDefault(x => x.IdCleaning == c.IdCleaning);
 
-                        db.Cleanings.Remove(cleaning);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            db.Cleanings.Remove(cleaning);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
+                    
                 }
             });
         }
@@ -62,26 +72,36 @@ namespace Zvuki.Pages.Сleaner
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    Employee employee = DataLoader.getEmployee();
-
-                    var cleanings = db.Cleanings
-                    .Include(x => x.Employee)
-                    .ThenInclude(x => x.Human)
-                    .Include(x => x.RecordingRoom)
-                    .Where(x => x.Employee.IdEmployee == employee.IdEmployee)
-                    .ToList();
-
-                  
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        this.cleanings.Clear();
+                        Employee employee = DataLoader.getEmployee();
+
+                        var cleanings = db.Cleanings
+                        .Include(x => x.Employee)
+                        .ThenInclude(x => x.Human)
+                        .Include(x => x.RecordingRoom)
+                        .Where(x => x.Employee.IdEmployee == employee.IdEmployee)
+                        .ToList();
 
 
-                        foreach (var vr in cleanings)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.cleanings.Add(vr);
-                        }
-                    });
+                            this.cleanings.Clear();
+
+
+                            foreach (var vr in cleanings)
+                            {
+                                this.cleanings.Add(vr);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
+                   
                 }
             });
 

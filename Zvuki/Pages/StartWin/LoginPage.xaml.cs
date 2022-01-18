@@ -42,48 +42,60 @@ namespace Zvuki.Pages.Register
             await Task.Run(() => {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    // получаем объекты из бд
-                    var humans = db.Humans.ToList();
-                    var clients = db.Clients
-                    .Include(x => x.Human)
-                    .ToList();
-                    var employees = db.Employees
-                    .Include(x => x.Human)
-                    .ToList();
 
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        foreach (var human in humans)
+
+                        // получаем объекты из бд
+                        var humans = db.Humans.ToList();
+                        var clients = db.Clients
+                        .Include(x => x.Human)
+                        .ToList();
+                        var employees = db.Employees
+                        .Include(x => x.Human)
+                        .ToList();
+
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            if (human.Login.Equals(txtLogin.Text) && human.Password.Equals(txtPassword.Password))
+                            foreach (var human in humans)
                             {
-                                foreach (var client in clients)
+                                if (human.Login.Equals(txtLogin.Text) && human.Password.Equals(txtPassword.Password))
                                 {
-                                    if (client.Human.Login.Equals(human.Login))
+                                    foreach (var client in clients)
                                     {
-                                        DataLoader.saveClient(client);
+                                        if (client.Human.Login.Equals(human.Login))
+                                        {
+                                            DataLoader.saveClient(client);
+                                        }
                                     }
-                                }
-                                foreach (var employee in employees)
-                                {
-                                    if (employee.Human.Login.Equals(human.Login))
+                                    foreach (var employee in employees)
                                     {
-                                        DataLoader.saveEmployee(employee);
+                                        if (employee.Human.Login.Equals(human.Login))
+                                        {
+                                            DataLoader.saveEmployee(employee);
+                                        }
                                     }
+
+                                    DataLoader.saveHuman(human);
+
+
+                                    MainWindow window = new MainWindow();
+                                    window.Show();
+                                    StartWindow win = (StartWindow)Window.GetWindow(this);
+                                    win.Close();
                                 }
-
-                                DataLoader.saveHuman(human);
-
-
-                                MainWindow window = new MainWindow();
-                                window.Show();
-                                StartWindow win = (StartWindow)Window.GetWindow(this);
-                                win.Close();
                             }
-                        }
-                    });
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
                 }
             });
         }
     }
 }
+

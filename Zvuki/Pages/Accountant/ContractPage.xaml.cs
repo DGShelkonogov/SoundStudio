@@ -19,8 +19,9 @@ using System.Windows.Shapes;
 using Zvuki.Models;
 using Word = Microsoft.Office.Interop.Word;
 using System.Reflection;
-
-using System.Reflection.Metadata;
+using Annotation = System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using NPOI.SS.Formula.Functions;
 
 namespace Zvuki.Pages.Accountant
 {
@@ -119,10 +120,16 @@ namespace Zvuki.Pages.Accountant
                             Path = pathToFile
                         };
 
-                        // добавляем их в бд
-                        db.Contracts.Add(contract);
-                        db.SaveChanges();
-                        loadData();
+                        if (MainWindow.validData(contract))
+                        {
+                            // добавляем их в бд
+                            db.Contracts.Add(contract);
+                            db.SaveChanges();
+                            loadData();
+                        }
+
+
+                       
                     });
                 }
             });
@@ -143,8 +150,11 @@ namespace Zvuki.Pages.Accountant
                         contract.Employee = db.Employees.FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
                         contract.Path = pathToFile;
 
-                        db.SaveChanges();
-                        loadData();
+                        if (MainWindow.validData(contract))
+                        {
+                            db.SaveChanges();
+                            loadData();
+                        }
                     });
                 }
             });
@@ -168,16 +178,20 @@ namespace Zvuki.Pages.Accountant
             });
         }
 
-        private void ContractList_MouseDown(object sender, MouseButtonEventArgs e)
+
+        private void ContractList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 Contract c = contracts[ContractList.SelectedIndex];
                 txtFilePath.Content = c.Path;
+                pathToFile = c.Path;
                 cmbEmployees.SelectedItem = c.Employee;
 
             }
             catch (Exception ex) { }
         }
+
+       
     }
 }

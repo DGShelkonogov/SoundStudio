@@ -45,42 +45,55 @@ namespace Zvuki.Pages
             await Task.Run(() => {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Human human = new Human
+
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            Name = txtName.Text,
-                            Surname = txtSurname.Text,
-                            Patronomic = txtPatronomic.Text,
-                            Phone = txtPhone.Text,
-                            Password = txtPassword.Text,
-                            DateOfBirth = dpDateOfBirth.DisplayDate,
-                            Email = txtEmail.Text,
-                            Login = txtLogin.Text,
-                            isAdmin = false
-                        };
+                            Human human = new Human
+                            {
+                                Name = txtName.Text,
+                                Surname = txtSurname.Text,
+                                Patronomic = txtPatronomic.Text,
+                                Phone = txtPhone.Text,
+                                Password = txtPassword.Text,
+                                DateOfBirth = dpDateOfBirth.DisplayDate,
+                                Email = txtEmail.Text,
+                                Login = txtLogin.Text,
+                                isAdmin = false
+                            };
 
-                        Client client = new Client
-                        {
-                            AmountMoney = 0,
-                            Human = human,
-                            AudioRecordingClients = new List<AudioRecordingClient>()
-                        };
+                            Client client = new Client
+                            {
+                                AmountMoney = 0,
+                                Human = human,
+                                AudioRecordingClients = new List<AudioRecordingClient>()
+                            };
 
-                        // добавляем их в бд
-                        db.Clients.Add(client);
-                        db.SaveChanges();
+                            if (MainWindow.validData(human) && MainWindow.validData(client))
+                            {
+                                db.Clients.Add(client);
+                                db.SaveChanges();
 
-                        DataLoader.saveHuman(human);
-                        DataLoader.saveClient(client);
+                                DataLoader.saveHuman(human);
+                                DataLoader.saveClient(client);
 
-                        MainWindow window = new MainWindow();
-                        window.Show();
-                        StartWindow win = (StartWindow)Window.GetWindow(this);
-                        win.Close();
-                    });
+                                MainWindow window = new MainWindow();
+                                window.Show();
+                                StartWindow win = (StartWindow)Window.GetWindow(this);
+                                win.Close();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
                 }
             });
         }
     }
 }
+

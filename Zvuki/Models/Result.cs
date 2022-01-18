@@ -16,7 +16,7 @@ namespace Zvuki.Models
         int scores;
         string resultTitle;
 
-
+        [Required]
         public virtual Candidate Candidate
         {
             get { return candidate; }
@@ -26,6 +26,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("Candidate");
             }
         }
+
+        [Required]
+        [Range(1, 999999)]
         public int Scores
         {
             get { return scores; }
@@ -35,6 +38,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("Scores");
             }
         }
+
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string ResultTitle
         {
             get { return resultTitle; }

@@ -51,25 +51,34 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Employee e = cmbEmployees.SelectedItem as Employee;
-                        RecordingRoom r = cmbRecordingRoom.SelectedItem as RecordingRoom;
-
-                        Cleaning cleaning = new Cleaning
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            DateTime = dtpDate.DisplayDate,
-                            Employee = db.Employees
-                            .FirstOrDefault(x => x.IdEmployee == e.IdEmployee),
-                            RecordingRoom = db.RecordingRooms
-                          .FirstOrDefault(x => x.IdRecordingRoom == r.IdRecordingRoom)
-                        };
+                            Employee e = cmbEmployees.SelectedItem as Employee;
+                            RecordingRoom r = cmbRecordingRoom.SelectedItem as RecordingRoom;
 
-                        // добавляем их в бд
-                        db.Cleanings.Add(cleaning);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            Cleaning cleaning = new Cleaning
+                            {
+                                DateTime = dtpDate.DisplayDate,
+                                Employee = db.Employees
+                                .FirstOrDefault(x => x.IdEmployee == e.IdEmployee),
+                                RecordingRoom = db.RecordingRooms
+                              .FirstOrDefault(x => x.IdRecordingRoom == r.IdRecordingRoom)
+                            };
+
+                            if (MainWindow.validData(cleaning))
+                            {
+                                db.Cleanings.Add(cleaning);
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             });
         }
@@ -80,26 +89,36 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Cleaning c = cleanings[CleaningList.SelectedIndex];
-                        Cleaning cleaning = db.Cleanings
-                        .FirstOrDefault(x => x.IdCleaning == c.IdCleaning);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            Cleaning c = cleanings[CleaningList.SelectedIndex];
+                            Cleaning cleaning = db.Cleanings
+                            .FirstOrDefault(x => x.IdCleaning == c.IdCleaning);
 
 
-                        Employee e = cmbEmployees.SelectedItem as Employee;
-                        RecordingRoom r = cmbRecordingRoom.SelectedItem as RecordingRoom;
+                            Employee e = cmbEmployees.SelectedItem as Employee;
+                            RecordingRoom r = cmbRecordingRoom.SelectedItem as RecordingRoom;
 
-                        cleaning.DateTime = dtpDate.DisplayDate;
-                        cleaning.Employee = db.Employees
-                            .FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
-                        cleaning.RecordingRoom = db.RecordingRooms
-                      .FirstOrDefault(x => x.IdRecordingRoom == r.IdRecordingRoom);
+                            cleaning.DateTime = dtpDate.DisplayDate;
+                            cleaning.Employee = db.Employees
+                                .FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
+                            cleaning.RecordingRoom = db.RecordingRooms
+                          .FirstOrDefault(x => x.IdRecordingRoom == r.IdRecordingRoom);
 
 
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            if (MainWindow.validData(cleaning))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             });
         }
@@ -110,16 +129,23 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Cleaning c = cleanings[CleaningList.SelectedIndex];
-                        Cleaning cleaning = db.Cleanings
-                        .FirstOrDefault(x => x.IdCleaning == c.IdCleaning);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            Cleaning c = cleanings[CleaningList.SelectedIndex];
+                            Cleaning cleaning = db.Cleanings
+                            .FirstOrDefault(x => x.IdCleaning == c.IdCleaning);
 
-                        db.Cleanings.Remove(cleaning);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            db.Cleanings.Remove(cleaning);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             });
         }
@@ -130,43 +156,73 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    var cleanings = db.Cleanings
-                    .Include(x => x.Employee)
-                    .ThenInclude(x => x.Human)
-                    .Include(x => x.RecordingRoom)
-                    .ToList();
-
-                    var employess = db.Employees
-                    .Include(x => x.Human)
-                    .ToList();
-
-                    var recordingRooms = db.RecordingRooms
-                    .ToList();
-
-
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        this.cleanings.Clear();
-                        this.listEmployees.Clear();
-                        this.listRecordingRoom.Clear();
+                        var cleanPosition = db.Positions
+                        .FirstOrDefault(x => x.Title.Equals("Сleaner"));
 
-                        foreach(var vr in cleanings)
-                        {
-                            this.cleanings.Add(vr);
-                        }
+                        var cleanings = db.Cleanings
+                        .Include(x => x.Employee)
+                        .ThenInclude(x => x.Human)
+                        .Include(x => x.RecordingRoom)
+                        .ToList();
 
-                        foreach (var vr in employess)
+                        var employess = db.Employees
+                        .Include(x => x.Human)
+                        .Include(x => x.Positions)
+                        .Where(x => x.Positions.Contains(cleanPosition))
+                        .ToList();
+
+                        var recordingRooms = db.RecordingRooms
+                        .ToList();
+
+
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            listEmployees.Add(vr);
-                        }
-                        foreach(var vr in recordingRooms)
-                        {
-                            listRecordingRoom.Add(vr);
-                        }
-                    });
+                            this.cleanings.Clear();
+                            this.listEmployees.Clear();
+                            this.listRecordingRoom.Clear();
+
+                            foreach (var vr in cleanings)
+                            {
+                                this.cleanings.Add(vr);
+                            }
+
+                            foreach (var vr in employess)
+                            {
+
+                                listEmployees.Add(vr);
+                            }
+                            foreach (var vr in recordingRooms)
+                            {
+                                listRecordingRoom.Add(vr);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             });
 
         }
+
+        private void CleaningList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Cleaning c = cleanings[CleaningList.SelectedIndex];
+                cmbEmployees.SelectedItem = c.Employee;
+                cmbRecordingRoom.SelectedItem = c.RecordingRoom;
+                dtpDate.SelectedDate = c.DateTime;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }
+

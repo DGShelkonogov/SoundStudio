@@ -17,6 +17,8 @@ namespace Zvuki.Models
         Employee employee;
         RecordingRoom recordingRoom;
 
+
+        [Required]
         [Column(TypeName = "Date")]
         public DateTime DateTime
         {
@@ -28,6 +30,7 @@ namespace Zvuki.Models
             }
         }
 
+        [Required]
         public virtual Employee Employee
         {
             get { return employee; }
@@ -38,7 +41,7 @@ namespace Zvuki.Models
             }
         }
 
-
+        [Required]
         public virtual RecordingRoom RecordingRoom
         {
             get { return recordingRoom; }

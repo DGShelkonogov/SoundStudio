@@ -15,7 +15,16 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView Name="EquipmentsList" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Button Content="Add" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add" Grid.Row="1"/>
+            <Button Content="Delete" HorizontalAlignment="Left" Margin="221,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete" Grid.Row="1"/>
+        </Grid>
+
+        <ListView Name="EquipmentsList"  SelectionChanged="EquipmentsList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Title}">Title</GridViewColumn>
@@ -28,9 +37,7 @@
         <Label Grid.Column="1" Content="New equipment" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtTitle" Grid.Column="1" HorizontalAlignment="Left" Margin="10,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Grid.Column="1" Content="Title" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
-        <Button Grid.Column="1" Content="Add" HorizontalAlignment="Left" Margin="10,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add"/>
         <Button Grid.Column="1" Content="Update" HorizontalAlignment="Left" Margin="115,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
-        <Button Grid.Column="1" Content="Delete" HorizontalAlignment="Left" Margin="220,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
 
 
         <Label Grid.Column="1" Content="Amount" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>

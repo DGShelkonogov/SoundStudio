@@ -1,29 +1,68 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Zvuki.Models;
+using Annotation = System.ComponentModel.DataAnnotations;
 
 namespace Zvuki
 {
     public partial class MainWindow : Window
     {
+       
         
-
-        ArrayList list = new ArrayList() 
-        { "Accountant", "Advertiser", "ClientPages", "HR", "Manager", "Сleaner" };
-        Grid[] grids = new Grid[6];
-
+        Dictionary<String, Grid> dictionaryAllPositions = new Dictionary<string, Grid>();
+        Dictionary<String, Grid> dictionaryPositions = new Dictionary<string, Grid>();
 
         public MainWindow()
         {
             InitializeComponent();
-            grids[0] = GridAccountant;
-            grids[1] = GridAdvertiser;
-            grids[2] = GridClient;
-            grids[3] = GridHR;
-            grids[4] = GridManager;
-            grids[5] = GridCleaner;
-            cmbRoles.ItemsSource = list;         
+
+            Human human = DataLoader.getHuman();
+
+            dictionaryAllPositions.Add("ClientPages", GridClient);
+            dictionaryAllPositions.Add("Advertiser", GridAdvertiser);
+            dictionaryAllPositions.Add("Accountant", GridAccountant);
+            dictionaryAllPositions.Add("HR", GridHR);
+            dictionaryAllPositions.Add("Manager", GridManager);
+            dictionaryAllPositions.Add("Сleaner", GridCleaner);
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Employee employee = db.Employees
+                    .Include(x => x.Human)
+                    .Include(x => x.Positions)
+                    .FirstOrDefault(x => x.Human.IdHuman == human.IdHuman);
+
+                var employess = db.Employees
+                    .Include(x => x.Human)
+                    .ToList();
+
+                Client client = db.Clients
+                    .Include(x => x.Human)
+                     .FirstOrDefault(x => x.Human.Login.Equals(human.Login));
+
+                if(client != null)
+                {
+                    dictionaryPositions.Add("ClientPages", dictionaryAllPositions["ClientPages"]);
+                    dictionaryPositions.Add("HR", dictionaryAllPositions["HR"]);
+                    dictionaryPositions.Add("Advertiser", dictionaryAllPositions["Advertiser"]);
+                }
+                if(employee != null)
+                {
+                    foreach(Position p in employee.Positions)
+                    {
+                        if(dictionaryAllPositions.ContainsKey(p.Title))
+                            dictionaryPositions.Add(p.Title, dictionaryAllPositions[p.Title]);
+                    }
+                }
+            }
+
+            cmbRoles.ItemsSource = dictionaryPositions.Keys;         
             cmbRoles.SelectedIndex = 0;
 
         }
@@ -37,21 +76,17 @@ namespace Zvuki
 
         private void cmbRoles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GridVisibility(cmbRoles.SelectedIndex);
-
-            GridAccountant.Visibility = Visibility.Visible;
-            GridAccountant.Visibility = Visibility.Hidden;
+            GridVisibility(cmbRoles.SelectedItem as String);
         }
 
-        public void GridVisibility(int index)
+        public void GridVisibility(string key)
         {
-            for(int i = 0; i < grids.Length; i++)
-            {
-                if(i == index)
-                    grids[i].Visibility = Visibility.Visible;
-                else
-                    grids[i].Visibility = Visibility.Hidden;
-            }
+           foreach(var item in dictionaryPositions)
+           {
+               item.Value.Visibility = Visibility.Hidden;
+           }
+
+           dictionaryPositions[key].Visibility = Visibility.Visible;
         }
 
         private void Button_Click_LogOut(object sender, RoutedEventArgs e)
@@ -62,6 +97,23 @@ namespace Zvuki
             StartWindow window = new StartWindow();
             window.Show();
             this.Close();
+        }
+
+        public static bool validData(Object args)
+        {
+            var results = new List<Annotation.ValidationResult>();
+            var context = new ValidationContext(args);
+            if (!Validator.TryValidateObject(args, context, results, true))
+            {
+                string message = "";
+                foreach (var error in results)
+                {
+                    message += error.ErrorMessage + '\n';
+                }
+                MessageBox.Show(message);
+                return false;
+            }
+            return true;
         }
     }
 }

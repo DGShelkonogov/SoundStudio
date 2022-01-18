@@ -13,8 +13,11 @@ namespace Zvuki.Models
         [Key]
         public int IdAdType { get; set; }
 
+  
         string title;
 
+        [Required]
+        [StringLength(3, MinimumLength = 3)]
         public string Title
         {
             get { return title; }

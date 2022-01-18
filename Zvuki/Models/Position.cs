@@ -14,8 +14,11 @@ namespace Zvuki.Models
         public int IdPosition { get; set; }
         string title;
         int salary;
-       // ICollection<Employee> employees;
+        ICollection<Employee> employees;
 
+
+        [Required]
+        [StringLength(50)]
         public string Title
         {
             get { return title; }
@@ -25,6 +28,8 @@ namespace Zvuki.Models
                 OnPropertyChanged("Title");
             }
         }
+        [Required]
+        [Range(1, 999999)]
         public int Salary
         {
             get { return salary; }
@@ -34,7 +39,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Salary");
             }
         }
-       /* public virtual ICollection<Employee> Employees
+        public virtual ICollection<Employee> Employees
         {
             get { return employees; }
             set
@@ -42,7 +47,7 @@ namespace Zvuki.Models
                 employees = value;
                 OnPropertyChanged("Employees");
             }
-        }*/
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string prop)

@@ -29,6 +29,7 @@ namespace Zvuki.Pages.ClientPages
         {
             InitializeComponent();
             RecordingList.ItemsSource = audioRecordingClients;
+            loadData();
         }
 
         private void Button_Click_Add(object sender, RoutedEventArgs e) => Create();
@@ -39,24 +40,42 @@ namespace Zvuki.Pages.ClientPages
 
         private void Button_Click_Upload_Recording(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Docx files (*.docx)|*.docx|Text files (*.txt)|*.txt";
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                pathRecording = openFileDialog.FileName;
-                txtTitle.Content = "File: " + pathRecording;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Docx files (*.docx)|*.docx|Text files (*.txt)|*.txt";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    pathRecording = openFileDialog.FileName;
+                    txtTitle.Content = "File: " + pathRecording;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            
         }
 
         private void Button_Click_Upload_Copyright(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Docx files (*.docx)|*.docx|Text files (*.txt)|*.txt";
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                pathCopyright = openFileDialog.FileName;
-                txtCopyright.Content = "File: " + pathCopyright;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Docx files (*.docx)|*.docx|Text files (*.txt)|*.txt";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    pathCopyright = openFileDialog.FileName;
+                    txtCopyright.Content = "File: " + pathCopyright;
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+           
         }
 
         public async void loadData()
@@ -65,19 +84,31 @@ namespace Zvuki.Pages.ClientPages
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    Client cl = DataLoader.getClient();
-                    var client = db.Clients
-                    .Include(x => x.AudioRecordingClients)
-                    .FirstOrDefault(x => x.IdClient == cl.IdClient);
-
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        this.audioRecordingClients.Clear();
-                        foreach (var vr in client.AudioRecordingClients)
+
+                        Client cl = DataLoader.getClient();
+                        var client = db.Clients
+                        .Include(x => x.AudioRecordingClients)
+                        .ThenInclude(x => x.AudioRecording)
+                        .Include(x => x.AudioRecordingClients)
+                        .ThenInclude(x => x.Copyright)
+                        .FirstOrDefault(x => x.IdClient == cl.IdClient);
+
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.audioRecordingClients.Add(vr);
-                        }
-                    });
+                            this.audioRecordingClients.Clear();
+                            foreach (var vr in client.AudioRecordingClients)
+                            {
+                                this.audioRecordingClients.Add(vr);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
         }
@@ -88,34 +119,48 @@ namespace Zvuki.Pages.ClientPages
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Client c = DataLoader.getClient();
-                        Client client = db.Clients
-                           .FirstOrDefault(x => x.IdClient == c.IdClient);
-                        if(client.AudioRecordingClients == null)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            client.AudioRecordingClients = new List<AudioRecordingClient>();
-                        }
-
-
-                        AudioRecordingClient audioRecordingClient = new AudioRecordingClient
-                        {
-                            AudioRecording = new AudioRecording
+                            Client c = DataLoader.getClient();
+                            Client client = db.Clients
+                               .FirstOrDefault(x => x.IdClient == c.IdClient);
+                            if (client.AudioRecordingClients == null)
                             {
-                                DateOfCreate = DateTime.Now,
-                                Path = pathRecording
-                            },
-                            Copyright = new Copyright
-                            {
-                                DateTime = DateTime.Now,
-                                Path = pathCopyright
+                                client.AudioRecordingClients = new List<AudioRecordingClient>();
                             }
-                        };
-                        client.AudioRecordingClients.Add(audioRecordingClient);
-                        db.SaveChanges();
-                        loadData();
-                    });
+
+
+                            AudioRecordingClient audioRecordingClient = new AudioRecordingClient
+                            {
+                                AudioRecording = new AudioRecording
+                                {
+                                    DateOfCreate = DateTime.Now,
+                                    Path = pathRecording
+                                },
+                                Copyright = new Copyright
+                                {
+                                    DateTime = DateTime.Now,
+                                    Path = pathCopyright
+                                }
+                            };
+
+                            if (MainWindow.validData(audioRecordingClient))
+                            {
+                                client.AudioRecordingClients.Add(audioRecordingClient);
+                                db.SaveChanges();
+                                loadData();
+                            }
+
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
         }
@@ -126,20 +171,32 @@ namespace Zvuki.Pages.ClientPages
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        AudioRecordingClient ar =
-                            audioRecordingClients[RecordingList.SelectedIndex];
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            AudioRecordingClient ar =
+                                audioRecordingClients[RecordingList.SelectedIndex];
 
-                        AudioRecordingClient audioRecordingClient = db.AudioRecordingClients.
-                        FirstOrDefault(x => x.IdAudioRecordingClient == ar.IdAudioRecordingClient);
+                            AudioRecordingClient audioRecordingClient = db.AudioRecordingClients.
+                            FirstOrDefault(x => x.IdAudioRecordingClient == ar.IdAudioRecordingClient);
 
-                        audioRecordingClient.AudioRecording.Path = pathRecording;
-                        audioRecordingClient.Copyright.Path = pathCopyright;
+                            audioRecordingClient.AudioRecording.Path = pathRecording;
+                            audioRecordingClient.Copyright.Path = pathCopyright;
 
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            if (MainWindow.validData(audioRecordingClient))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
         }
@@ -150,20 +207,30 @@ namespace Zvuki.Pages.ClientPages
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        AudioRecordingClient ar =
-                             audioRecordingClients[RecordingList.SelectedIndex];
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            AudioRecordingClient ar =
+                                 audioRecordingClients[RecordingList.SelectedIndex];
 
-                        AudioRecordingClient audioRecordingClient = db.AudioRecordingClients.
-                        FirstOrDefault(x => x.IdAudioRecordingClient == ar.IdAudioRecordingClient);
-                        db.AudioRecordingClients.Remove(audioRecordingClient);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            AudioRecordingClient audioRecordingClient = db.AudioRecordingClients.
+                            FirstOrDefault(x => x.IdAudioRecordingClient == ar.IdAudioRecordingClient);
+                            db.AudioRecordingClients.Remove(audioRecordingClient);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
         }
 
     }
 }
+

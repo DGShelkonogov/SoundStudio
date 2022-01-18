@@ -16,7 +16,9 @@ namespace Zvuki.Models
 
         string name, surname, patronomic, phone, login, email, password;
         DateTime dateOfBirth;
-        
+
+        [Required]
+        [StringLength(50)]
         public string Name 
         { 
             get { return name; }
@@ -26,6 +28,8 @@ namespace Zvuki.Models
                 OnPropertyChanged("Name");
             }
         }
+        [Required]
+        [StringLength(50)]
         public string Surname 
         { 
             get { return surname; }
@@ -35,6 +39,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("Surname");
             }
         }
+
+        [Required]
+        [StringLength(50)]
         public string Patronomic 
         { 
             get { return patronomic; }
@@ -44,6 +51,11 @@ namespace Zvuki.Models
                 OnPropertyChanged("Patronomic");
             }
         }
+
+
+        [Required]
+        [StringLength(50, MinimumLength = 8)]
+        [RegularExpression(@"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$")]
         public string Phone 
         { 
             get { return phone; }
@@ -53,6 +65,10 @@ namespace Zvuki.Models
                 OnPropertyChanged("Phone");
             }
         }
+
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
+    
         public string Login 
         {
             get { return login; }
@@ -62,6 +78,10 @@ namespace Zvuki.Models
                 OnPropertyChanged("Login");
             }
         }
+
+        [Required]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
+        [StringLength(50, MinimumLength = 3)]
         public string Email 
         { 
             get { return email; }
@@ -71,6 +91,10 @@ namespace Zvuki.Models
                 OnPropertyChanged("Email");
             }
         }
+
+        [Required]
+        [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
+        [DataType(DataType.Password)]
         public string Password 
         {
             get { return password; }
@@ -82,6 +106,7 @@ namespace Zvuki.Models
         
         }
 
+        [Required]
         [Column(TypeName = "Date")]
         public DateTime DateOfBirth
         {

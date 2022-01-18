@@ -40,30 +40,39 @@ namespace Zvuki.Pages.ClientPages
 
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-
-                        Client client = DataLoader.getClient();
-
-                        var candidates = db.Candidates.ToList();
-
-                        var results = db.Results
-                        .Include(x => x.Candidate)
-                        .ThenInclude(x => x.VoiceActingRoles)
-                        .Include(x => x.Candidate)
-                        .ThenInclude(x => x.Client)
-                        .ThenInclude(x => x.Human)
-                        .Where(x => x.Candidate.Client.IdClient == client.IdClient)
-                        .ToList();
-
-                        this.results.Clear();
-
-                        foreach (var vr in results)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.results.Add(vr);
-                        }
-                       
-                    });
+
+                            Client client = DataLoader.getClient();
+
+                            var candidates = db.Candidates.ToList();
+
+                            var results = db.Results
+                            .Include(x => x.Candidate)
+                            .ThenInclude(x => x.VoiceActingRoles)
+                            .Include(x => x.Candidate)
+                            .ThenInclude(x => x.Client)
+                            .ThenInclude(x => x.Human)
+                            .Where(x => x.Candidate.Client.IdClient == client.IdClient)
+                            .ToList();
+
+                            this.results.Clear();
+
+                            foreach (var vr in results)
+                            {
+                                this.results.Add(vr);
+                            }
+
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                
                 }
             });
 
@@ -71,12 +80,21 @@ namespace Zvuki.Pages.ClientPages
 
         private void ResultList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Result result = results[ResultList.SelectedIndex];
-            roles.Clear();
-            foreach (VoiceActingRole role in result.Candidate.VoiceActingRoles)
+            try
             {
-                roles.Add(role);
+                Result result = results[ResultList.SelectedIndex];
+                roles.Clear();
+                foreach (VoiceActingRole role in result.Candidate.VoiceActingRoles)
+                {
+                    roles.Add(role);
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+           
         }
     }
 }

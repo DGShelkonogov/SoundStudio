@@ -47,17 +47,30 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        RecordingRoom recording = new RecordingRoom
-                        {
-                            RoomNumber = txtNumber.Text
-                        };
 
-                        db.RecordingRooms.Add(recording);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            RecordingRoom recording = new RecordingRoom
+                            {
+                                RoomNumber = txtNumber.Text
+                            };
+
+                            if (MainWindow.validData(recording))
+                            {
+                                db.RecordingRooms.Add(recording);
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
                 }
             });
         }
@@ -68,17 +81,30 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        RecordingRoom rc = recordingRooms[RecordingRoomList.SelectedIndex];
-                        RecordingRoom recording = db.RecordingRooms
-                        .FirstOrDefault(x => x.IdRecordingRoom == rc.IdRecordingRoom);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            RecordingRoom rc = recordingRooms[RecordingRoomList.SelectedIndex];
+                            RecordingRoom recording = db.RecordingRooms
+                            .FirstOrDefault(x => x.IdRecordingRoom == rc.IdRecordingRoom);
 
-                        recording.RoomNumber = txtNumber.Text;
+                            recording.RoomNumber = txtNumber.Text;
 
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            if (MainWindow.validData(recording))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                  
                 }
             });
         }
@@ -89,16 +115,25 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        RecordingRoom rc = recordingRooms[RecordingRoomList.SelectedIndex];
-                        RecordingRoom recording = db.RecordingRooms
-                        .FirstOrDefault(x => x.IdRecordingRoom == rc.IdRecordingRoom);
-                        
-                        db.RecordingRooms.Remove(recording);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            RecordingRoom rc = recordingRooms[RecordingRoomList.SelectedIndex];
+                            RecordingRoom recording = db.RecordingRooms
+                            .FirstOrDefault(x => x.IdRecordingRoom == rc.IdRecordingRoom);
+
+                            db.RecordingRooms.Remove(recording);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
         }
@@ -110,19 +145,42 @@ namespace Zvuki.Pages.Manager
 
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
 
-                        var recordingRooms = db.RecordingRooms.ToList();
-                        this.recordingRooms.Clear();
-                        foreach (var adT in recordingRooms)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.recordingRooms.Add(adT);
-                        }
-                    });
+
+                            var recordingRooms = db.RecordingRooms.ToList();
+                            this.recordingRooms.Clear();
+                            foreach (var adT in recordingRooms)
+                            {
+                                this.recordingRooms.Add(adT);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
 
+        }
+
+        private void RecordingRoomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                RecordingRoom rc = recordingRooms[RecordingRoomList.SelectedIndex];
+                txtNumber.Text = rc.RoomNumber;
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

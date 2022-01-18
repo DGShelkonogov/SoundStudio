@@ -21,10 +21,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="165"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="110"/>
             </Grid.ColumnDefinitions>
+            <Button Content="Log out" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click_LogOut" Margin="2"/>
 
-           
-           
+
             <Grid Grid.Column="1" x:Name="GridAdvertiser" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -54,7 +55,7 @@
                 <Button Content="Payments" Tag="PaymentPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
             </Grid>
 
-            <Grid Grid.Column="1" x:Name="GridClient" Visibility="Visible">
+            <Grid Grid.Column="1" x:Name="GridClient" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -64,12 +65,9 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button Content="Groups" Tag="GroupPage" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
-                <Button Content="Invitations" Tag="InvitationPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
-                <Button Content="Recordings" Tag="RecordingPage" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
-                <Button Content="Rents" Tag="RentPage" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
-                <Button Content="Results" Tag="ResultPage" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
-                <Button Content="Log out" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click_LogOut" Margin="2"/>
+                <Button Content="Recordings" Tag="RecordingPage" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Rents" Tag="RentPage" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
+                <Button Content="Results" Tag="ResultPage" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="100"  Click="Button_Click" Margin="2"/>
             </Grid>
 
             <Grid Grid.Column="1" x:Name="GridHR" Visibility="Hidden">

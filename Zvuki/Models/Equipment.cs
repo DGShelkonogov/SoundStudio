@@ -16,6 +16,8 @@ namespace Zvuki.Models
         string title;
         int amount, price;
 
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Title
         {
             get { return title; }
@@ -25,6 +27,10 @@ namespace Zvuki.Models
                 OnPropertyChanged("Title");
             }
         }
+
+        [Required]
+        [Range(1, 1000)]
+        [StringLength(50, MinimumLength = 3)]
         public int Amount
         {
             get { return amount; }
@@ -34,6 +40,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("Amount");
             }
         }
+        [Required]
+        [Range(1, 1000)]
+        [StringLength(50, MinimumLength = 3)]
         public int Price 
         {
             get { return price; }

@@ -16,6 +16,7 @@ namespace Zvuki.Models
         Group group;
         Copyright copyright;
 
+        [Required]
         public virtual AudioRecording AudioRecording
         {
             get { return audioRecording; }
@@ -25,6 +26,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("AudioRecording");
             }
         }
+        [Required]
         public virtual Group Group
         {
             get { return group; }
@@ -34,6 +36,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Group");
             }
         }
+        [Required]
         public virtual Copyright Copyright
         {
             get { return copyright; }

@@ -10,7 +10,24 @@
       Title="RecordingPage">
 
     <Grid>
-        <ListView Name="RecordingList" Margin="0,0,560,0" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Button Content="Add" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add" Grid.Row="1"/>
+            <Button Content="Delete" HorizontalAlignment="Left" Margin="220,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete" Grid.Row="1"/>
+            <Button Content="Update" HorizontalAlignment="Left" Margin="115,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update" Grid.Row="1"/>
+
+        </Grid>
+
+        <ListView Name="RecordingList" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=AudioRecording.Path}">Recording path</GridViewColumn>
@@ -18,9 +35,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="245,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add"/>
-        <Button Content="Update" HorizontalAlignment="Center" Margin="0,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="455,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
 
         <Label Content="New recording" FontSize="20" HorizontalAlignment="Left" Margin="245,10,0,0" VerticalAlignment="Top"/>
         <Button Content="upload" HorizontalAlignment="Left" Margin="247,88,0,0" VerticalAlignment="Top" Height="30" Width="70" Click="Button_Click_Upload_Recording"/>

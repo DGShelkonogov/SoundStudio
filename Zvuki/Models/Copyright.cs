@@ -17,6 +17,7 @@ namespace Zvuki.Models
         string path;
         DateTime dateTime;
 
+        [Required]
         public string Path
         {
             get { return path; }
@@ -26,6 +27,8 @@ namespace Zvuki.Models
                 OnPropertyChanged("Path");
             }
         }
+
+        [Required]
         [Column(TypeName = "Date")]
         public DateTime DateTime 
         {

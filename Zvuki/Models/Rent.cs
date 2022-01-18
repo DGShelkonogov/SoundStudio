@@ -19,6 +19,7 @@ namespace Zvuki.Models
         Equipment equipment;
         Client client;
 
+        [Required]
         [Column(TypeName = "Date")]
         public DateTime StartDate
         {
@@ -29,6 +30,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("StartDate");
             }
         }
+        [Required]
         [Column(TypeName = "Date")]
         public DateTime EndDate
         {
@@ -39,6 +41,8 @@ namespace Zvuki.Models
                 OnPropertyChanged("EndDate");
             }
         }
+        [Required]
+        [Range(1, 999999)]
         public int Amount 
         {
             get { return amount; }
@@ -48,6 +52,8 @@ namespace Zvuki.Models
                 OnPropertyChanged("Amount");
             }
         }
+        [Required]
+        [Range(1, 999999)]
         public int Price 
         {
             get { return price; }
@@ -57,6 +63,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Price");
             }
         }
+        [Required]
         public virtual Equipment Equipment
         {
             get { return equipment; }
@@ -66,7 +73,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Equipment");
             }
         }
-
+        [Required]
         public virtual Client Client
         {
             get { return client; }

@@ -14,6 +14,9 @@ namespace Zvuki.Models
         public int IdVoiceActingRole { get; set; }
 
         string title;
+
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Title
         {
             get { return title; }

@@ -51,22 +51,36 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Candidate c = cmpCandidate.SelectedItem as Candidate;
 
-                        Result result = new Result
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            ResultTitle = txtResultTitle.Text,
-                            Scores = Convert.ToInt32(txtScores.Text),
-                            Candidate = db.Candidates
-                            .FirstOrDefault(x => x.IdCandidate == c.IdCandidate)
-                        };
+                            Candidate c = cmpCandidate.SelectedItem as Candidate;
 
-                        db.Results.Add(result);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            Result result = new Result
+                            {
+                                ResultTitle = txtResultTitle.Text,
+                                Scores = Convert.ToInt32(txtScores.Text),
+                                Candidate = db.Candidates
+                                .FirstOrDefault(x => x.IdCandidate == c.IdCandidate)
+                            };
+
+
+
+                            if (MainWindow.validData(result))
+                            {
+                                db.Results.Add(result);
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
         }
@@ -77,24 +91,35 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
 
-                        Result re = results[ResultList.SelectedIndex];
-                        Result result = db.Results
-                        .FirstOrDefault(x => x.IdResult == re.IdResult);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
 
-                        Candidate c = cmpCandidate.SelectedItem as Candidate;
+                            Result re = results[ResultList.SelectedIndex];
+                            Result result = db.Results
+                            .FirstOrDefault(x => x.IdResult == re.IdResult);
 
-                        result.ResultTitle = txtResultTitle.Text;
-                        result.Scores = Convert.ToInt32(txtScores.Text);
-                        result.Candidate = db.Candidates
-                        .FirstOrDefault(x => x.IdCandidate == c.IdCandidate);
+                            Candidate c = cmpCandidate.SelectedItem as Candidate;
 
-                        
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            result.ResultTitle = txtResultTitle.Text;
+                            result.Scores = Convert.ToInt32(txtScores.Text);
+                            result.Candidate = db.Candidates
+                            .FirstOrDefault(x => x.IdCandidate == c.IdCandidate);
+
+                            if (MainWindow.validData(result))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
         }
@@ -105,16 +130,25 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Result re = results[ResultList.SelectedIndex];
-                        Result result = db.Results
-                        .FirstOrDefault(x => x.IdResult == re.IdResult);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            Result re = results[ResultList.SelectedIndex];
+                            Result result = db.Results
+                            .FirstOrDefault(x => x.IdResult == re.IdResult);
 
-                        db.Results.Remove(result);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            db.Results.Remove(result);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                  
                 }
             });
         }
@@ -126,29 +160,58 @@ namespace Zvuki.Pages.Manager
 
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        var candidates = db.Candidates.ToList();
-                        var results = db.Results
-                        .Include(x => x.Candidate)
-                        .ThenInclude(x => x.Client)
-                        .ThenInclude(x => x.Human)
-                        .ToList();
-                       
-                        this.results.Clear();
-                        this.listCandidates.Clear();
 
-                        foreach (var vr in results)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.results.Add(vr);
-                        }
-                        foreach (var vr in candidates)
-                        {
-                            this.listCandidates.Add(vr);
-                        }
-                    });
+                            var candidates = db.Candidates
+                            .Include(x => x.Client)
+                            .ThenInclude(x => x.Human)
+                            .ToList();
+
+
+                            var results = db.Results
+                            .Include(x => x.Candidate)
+                            .ThenInclude(x => x.Client)
+                            .ThenInclude(x => x.Human)
+                            .ToList();
+
+                            this.results.Clear();
+                            this.listCandidates.Clear();
+
+                            foreach (var vr in results)
+                            {
+                                this.results.Add(vr);
+                            }
+                            foreach (var vr in candidates)
+                            {
+                                this.listCandidates.Add(vr);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
+        }
+
+        private void ResultList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Result re = results[ResultList.SelectedIndex];
+                txtResultTitle.Text = re.ResultTitle;
+                txtScores.Text = re.Scores.ToString();
+                cmpCandidate.SelectedItem = re.Candidate;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

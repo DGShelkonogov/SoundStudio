@@ -13,11 +13,18 @@ namespace Zvuki.Models
     {
         [Key]
         public int IdAdvertisingOrder { get; set; }
+
         DateTime orderDate;
+
+      
         int price;
+
         AdType adType;
+
         Employee employee;
 
+
+        [Required]
         [Column(TypeName = "Date")]
         public DateTime OrderDate
         {
@@ -28,6 +35,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("OrderDate");
             }
         }
+
+        [Required]
+        [Range(1, 1000)]
         public int Price
         {
             get { return price; }
@@ -37,6 +47,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Price");
             }
         }
+        [Required]
         public virtual AdType AdType
         {
             get { return adType; }
@@ -46,6 +57,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("AdType");
             }
         }
+        [Required]
         public virtual Employee Employee
         {
             get { return employee; }

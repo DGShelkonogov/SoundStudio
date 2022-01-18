@@ -54,24 +54,34 @@ namespace Zvuki.Pages.Advertiser
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        AdType ad = cmbTypeAd.SelectedItem as AdType;
-                        Employee em = DataLoader.getEmployee();
-
-                        AdvertisingOrder advertisingOrder = new AdvertisingOrder
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            AdType = db.AdTypes.FirstOrDefault(x => x.IdAdType == ad.IdAdType),
-                            Price = Convert.ToInt32(txtPrice.Text),
-                            OrderDate = DateTime.Now,
-                           //ТУТ НАДА ИСПРАВИТЬ ПАТОМ
-                            Employee = db.Employees.FirstOrDefault(x => x.IdEmployee == em.IdEmployee)
-                        };
+                            AdType ad = cmbTypeAd.SelectedItem as AdType;
+                            Employee em = DataLoader.getEmployee();
 
-                        db.AdvertisingOrders.Add(advertisingOrder);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            AdvertisingOrder advertisingOrder = new AdvertisingOrder
+                            {
+                                AdType = db.AdTypes.FirstOrDefault(x => x.IdAdType == ad.IdAdType),
+                                Price = Convert.ToInt32(txtPrice.Text),
+                                OrderDate = DateTime.Now,
+                                Employee = db.Employees.FirstOrDefault(x => x.IdEmployee == em.IdEmployee)
+                            };
+                            if (MainWindow.validData(advertisingOrder))
+                            {
+                                db.AdvertisingOrders.Add(advertisingOrder);
+                                db.SaveChanges();
+                                loadData();
+                            }
+
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                  
                 }
             });
         }
@@ -82,18 +92,28 @@ namespace Zvuki.Pages.Advertiser
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        AdvertisingOrder ao = advertisingOrders[AdList.SelectedIndex];
-                        AdvertisingOrder advertisingOrder = db.AdvertisingOrders
-                        .FirstOrDefault(x => x.IdAdvertisingOrder == ao.IdAdvertisingOrder);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            AdvertisingOrder ao = advertisingOrders[AdList.SelectedIndex];
+                            AdvertisingOrder advertisingOrder = db.AdvertisingOrders
+                            .FirstOrDefault(x => x.IdAdvertisingOrder == ao.IdAdvertisingOrder);
 
-                        advertisingOrder.AdType = cmbTypeAd.SelectedItem as AdType;
-                        advertisingOrder.Price = Convert.ToInt32(txtPrice.Text);
+                            advertisingOrder.AdType = cmbTypeAd.SelectedItem as AdType;
+                            advertisingOrder.Price = Convert.ToInt32(txtPrice.Text);
 
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            if (MainWindow.validData(advertisingOrder))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             });
         }
@@ -104,15 +124,23 @@ namespace Zvuki.Pages.Advertiser
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        AdvertisingOrder ao = advertisingOrders[AdList.SelectedIndex];
-                        AdvertisingOrder advertisingOrder = db.AdvertisingOrders
-                        .FirstOrDefault(x => x.IdAdvertisingOrder == ao.IdAdvertisingOrder);
-                        db.AdvertisingOrders.Remove(advertisingOrder);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            AdvertisingOrder ao = advertisingOrders[AdList.SelectedIndex];
+                            AdvertisingOrder advertisingOrder = db.AdvertisingOrders
+                            .FirstOrDefault(x => x.IdAdvertisingOrder == ao.IdAdvertisingOrder);
+                            db.AdvertisingOrders.Remove(advertisingOrder);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                   
                 }
             });
         }
@@ -124,30 +152,53 @@ namespace Zvuki.Pages.Advertiser
 
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-
-                        var advertisingOrders = db.AdvertisingOrders
-                        .Include(x => x.Employee)
-                        .ThenInclude(x => x.Human)
-                        .ToList();
-                        var adTypes = db.AdTypes.ToList();
-
-                        this.advertisingOrders.Clear();
-                        this.cmbListAdTypes.Clear();
-
-                        foreach (var advertisingOrder in advertisingOrders)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.advertisingOrders.Add(advertisingOrder);
-                        }
-                        foreach(var adType in adTypes)
-                        {
-                            cmbListAdTypes.Add(adType);
-                        }
-                    });
+
+                            var advertisingOrders = db.AdvertisingOrders
+                            .Include(x => x.Employee)
+                            .ThenInclude(x => x.Human)
+                            .ToList();
+                            var adTypes = db.AdTypes.ToList();
+
+                            this.advertisingOrders.Clear();
+                            this.cmbListAdTypes.Clear();
+
+                            foreach (var advertisingOrder in advertisingOrders)
+                            {
+                                this.advertisingOrders.Add(advertisingOrder);
+                            }
+                            foreach (var adType in adTypes)
+                            {
+                                cmbListAdTypes.Add(adType);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                 
                 }
             });
 
+        }
+
+        private void AdList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                AdvertisingOrder ao = advertisingOrders[AdList.SelectedIndex];
+                cmbTypeAd.SelectedItem = ao.AdType;
+                txtPrice.Text = ao.Price.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Zvuki.Models
         ICollection<Rent> rents;
         ICollection<AudioRecordingGroup> audioRecordingGroups;
 
+        [Required]
+        [StringLength(50, MinimumLength = 5)]
         public string Title
         {
             get { return title; }
@@ -24,6 +26,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Title");
             }
         }
+        [Required]
         public virtual ICollection<Client> Clients
         {
             get { return clients; }
@@ -33,6 +36,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Clients");
             }
         }
+        [Required]
         public virtual ICollection<Rent> Rents 
         {
             get { return rents; }
@@ -42,6 +46,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Rents");
             }
         }
+        [Required]
         public virtual ICollection<AudioRecordingGroup> AudioRecordingGroups 
         {
             get { return audioRecordingGroups; }

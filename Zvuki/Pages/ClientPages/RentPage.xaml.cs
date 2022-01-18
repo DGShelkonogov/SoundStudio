@@ -37,14 +37,15 @@ namespace Zvuki.Pages.ClientPages
 
         private void Button_Click_ToRent(object sender, RoutedEventArgs e) => toRent();
 
-
         public async void toRent()
         {
             await Task.Run(() =>
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
+                    {
+                         App.Current.Dispatcher.Invoke((Action)delegate
                     {
                         Client client = DataLoader.getClient();
 
@@ -67,10 +68,18 @@ namespace Zvuki.Pages.ClientPages
                             .FirstOrDefault(x => x.IdClient == client.IdClient)
                         };
 
-                        db.Rents.Add(rent);
-                        db.SaveChanges();
-                        loadData();
+                        if (MainWindow.validData(rent))
+                        {
+                            db.Rents.Add(rent);
+                            db.SaveChanges();
+                            loadData();
+                        }
                     });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             });
         }
@@ -79,32 +88,42 @@ namespace Zvuki.Pages.ClientPages
         {
             await Task.Run(() =>
             {
-                using (ApplicationContext db = new ApplicationContext())
+                try
                 {
-                    Client client = DataLoader.getClient();
-                    var equipments = db.Equipments.ToList();
-                    var rents = db.Rents
-                    .Include(x => x.Client)
-                    .ThenInclude(x => x.Human)
-                    .Where(x => x.Client.IdClient == client.IdClient)
-                    .ToList();
-
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    using (ApplicationContext db = new ApplicationContext())
                     {
-                        this.equipments.Clear();
-                        this.rents.Clear();
+                        Client client = DataLoader.getClient();
+                        var equipments = db.Equipments.ToList();
+                        var rents = db.Rents
+                        .Include(x => x.Client)
+                        .ThenInclude(x => x.Human)
+                        .Where(x => x.Client.IdClient == client.IdClient)
+                        .ToList();
+
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            this.equipments.Clear();
+                            this.rents.Clear();
 
 
-                        foreach (var vr in equipments)
-                        {
-                            this.equipments.Add(vr);
-                        }
-                        foreach(var vr in rents)
-                        {
-                            this.rents.Add(vr);
-                        }
-                    });
+                            foreach (var vr in equipments)
+                            {
+                                this.equipments.Add(vr);
+                            }
+                            foreach (var vr in rents)
+                            {
+                                this.rents.Add(vr);
+                            }
+                        });
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+
+                
             });
 
         }
@@ -134,9 +153,15 @@ namespace Zvuki.Pages.ClientPages
 
         private void cmbEquipment_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Equipment eq = cmbEquipment.SelectedItem as Equipment;
-           labelAmount.Content = "Amount: " + eq.Amount;
-           
+            try
+            {
+                Equipment eq = cmbEquipment.SelectedItem as Equipment;
+                labelAmount.Content = "Amount: " + eq.Amount;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

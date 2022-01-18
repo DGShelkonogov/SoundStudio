@@ -15,7 +15,17 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView Name="CandidateList" MouseDown="CandidateList_MouseDown" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Button Content="Add" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add" Grid.Row="1"/>
+            <Button Content="Update" HorizontalAlignment="Left" Margin="115,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update" Grid.Row="1"/>
+            <Button Content="Delete" HorizontalAlignment="Left" Margin="220,5,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete" Grid.Row="1"/>
+        </Grid>
+
+        <ListView Name="CandidateList" SelectionChanged="CandidateList_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Client.Human.Surname}">Surname</GridViewColumn>
@@ -37,11 +47,6 @@
 
         <Label Grid.Column="1" Content="New candidate" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="1" Content="Client" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
-
-
-        <Button Grid.Column="1" Content="Add" HorizontalAlignment="Left" Margin="10,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Add"/>
-        <Button Grid.Column="1" Content="Update" HorizontalAlignment="Left" Margin="115,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Update"/>
-        <Button Grid.Column="1" Content="Delete" HorizontalAlignment="Left" Margin="220,405,0,0" VerticalAlignment="Top" Height="35" Width="100" Click="Button_Click_Delete"/>
         <ComboBox  x:Name="cmbClient" DisplayMemberPath="Human.Name" Grid.Column="1" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="155"/>
         <Label Grid.Column="1" Content="Roles" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cmbRoles" DisplayMemberPath="Title" SelectionChanged="cmbRoles_SelectionChanged" Grid.Column="1" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="155"/>

@@ -13,6 +13,9 @@ namespace Zvuki.Models
         [Key]
         public int IdRecordingRoom { get; set; }
         string roomNumber;
+
+        [Required]
+        [StringLength(50)]
         public string RoomNumber
         {
             get { return roomNumber; }

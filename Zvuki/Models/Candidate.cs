@@ -15,6 +15,7 @@ namespace Zvuki.Models
         ICollection<VoiceActingRole> voiceActingRoles;
         Client client;
 
+        [Required]
         public virtual ICollection<VoiceActingRole> VoiceActingRoles
         {
             get { return voiceActingRoles; }
@@ -24,6 +25,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("VoiceActingRoles");
             }
         }
+        [Required]
         public virtual Client Client
         {
             get { return client; }

@@ -16,6 +16,7 @@ namespace Zvuki.Models
         string path;
         Employee employee;
 
+        [Required]
         public string Path
         {
             get { return path; }
@@ -25,6 +26,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Path");
             }
         }
+        [Required]
         public virtual Employee Employee
         {
             get { return employee; }

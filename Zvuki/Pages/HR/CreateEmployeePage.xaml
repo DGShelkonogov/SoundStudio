@@ -51,40 +51,56 @@
 
             <Label Content="Surname" HorizontalAlignment="Left" Margin="16,103,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtSurname" HorizontalAlignment="Left" Margin="16,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
             <Label Content="Patronymic" HorizontalAlignment="Left" Margin="16,147,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtPatronymic" HorizontalAlignment="Left" Margin="16,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
             <Label  Content="Phone" HorizontalAlignment="Left" Margin="16,191,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtPhone" HorizontalAlignment="Left" Margin="16,217,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
             <Label Content="Email" HorizontalAlignment="Left" Margin="16,235,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="16,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Login" HorizontalAlignment="Left" Margin="200,59,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtLogin" HorizontalAlignment="Left" Margin="200,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Password" HorizontalAlignment="Left" Margin="200,103,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="200,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Repeat password" HorizontalAlignment="Left" Margin="200,147,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtRepeatPassword" HorizontalAlignment="Left" Margin="200,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
             <Label Content="TIN" HorizontalAlignment="Left" Margin="17,279,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtTIN" HorizontalAlignment="Left" Margin="16,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="SNILS" HorizontalAlignment="Left" Margin="17,323,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtSNILS" HorizontalAlignment="Left" Margin="16,349,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Number" HorizontalAlignment="Left" Margin="400,59,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtNumber" HorizontalAlignment="Left" Margin="400,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Bank name" HorizontalAlignment="Left" Margin="400,103,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtBankName" HorizontalAlignment="Left" Margin="400,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="BIC" HorizontalAlignment="Left" Margin="400,147,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtBIC" HorizontalAlignment="Left" Margin="400,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="TIN of the bank" HorizontalAlignment="Left" Margin="400,191,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtTINOfTheBank" HorizontalAlignment="Left" Margin="400,216,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="COR of the bank" HorizontalAlignment="Left" Margin="400,235,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtCOR" HorizontalAlignment="Left" Margin="400,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Correspondent account" HorizontalAlignment="Left" Margin="400,279,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txtCorrespondentAccount" HorizontalAlignment="Left" Margin="400,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <ComboBox x:Name="cmbPositions" SelectionChanged="cmbPosition_SelectionChanged" HorizontalAlignment="Left" Margin="556,85,0,0" VerticalAlignment="Top" Width="120"/>
-            <Label Content="Position" HorizontalAlignment="Left" Margin="556,59,0,0" VerticalAlignment="Top"/>
-            <Button Content="Back" HorizontalAlignment="Left" Margin="220,22,0,0" VerticalAlignment="Top" Height="20" Width="60" Click="Button_Click_Back"/>
+
+            <Label Content="SNILS" HorizontalAlignment="Left" Margin="200,279,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtSNILS" HorizontalAlignment="Left" Margin="200,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+            <Label Content="Login" HorizontalAlignment="Left" Margin="200,59,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtLogin" HorizontalAlignment="Left" Margin="200,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+            <Label Content="Password" HorizontalAlignment="Left" Margin="200,103,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="200,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+            <Label Content="Repeat password" HorizontalAlignment="Left" Margin="200,147,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtRepeatPassword" HorizontalAlignment="Left" Margin="200,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
             <DatePicker x:Name="dpDateOfBirth" HorizontalAlignment="Left" Margin="200,216,0,0" VerticalAlignment="Top"/>
             <Label Content="Date of birth" HorizontalAlignment="Left" Margin="200,191,0,0" VerticalAlignment="Top"/>
 
+            <Label Content="Number" HorizontalAlignment="Left" Width="130" Margin="400,59,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtNumber" HorizontalAlignment="Left" Margin="376,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="154"/>
+
+            <Label Content="Bank name" HorizontalAlignment="Left" Margin="400,103,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtBankName" HorizontalAlignment="Left" Margin="376,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144"/>
+
+            <Label Content="BIC" HorizontalAlignment="Left" Margin="400,147,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtBIC" HorizontalAlignment="Left" Margin="376,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144"/>
+
+            <Label Content="TIN of the bank" HorizontalAlignment="Left" Margin="400,191,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtTINOfTheBank" HorizontalAlignment="Left" Margin="376,216,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144"/>
+
+            <Label Content="COR of the bank" HorizontalAlignment="Left" Margin="400,235,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtCOR" HorizontalAlignment="Left" Margin="376,261,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144"/>
+
+            <Label Content="Correspondent account" HorizontalAlignment="Left" Width="130" Margin="400,279,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtCorrespondentAccount" HorizontalAlignment="Left" Margin="376,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144"/>
+
+            <ComboBox x:Name="cmbPositions" DisplayMemberPath="Title" SelectionChanged="cmbPosition_SelectionChanged" HorizontalAlignment="Left" Margin="556,85,0,0" VerticalAlignment="Top" Width="120"/>
+            <Label Content="Position" HorizontalAlignment="Left" Margin="556,59,0,0" VerticalAlignment="Top"/>
+
+            <Button Content="Back" HorizontalAlignment="Left" Margin="220,22,0,0" VerticalAlignment="Top" Height="20" Width="60" Click="Button_Click_Back"/>
 
             <ListView Name="PositionList" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="556,112,124,77">
                 <ListView.View>

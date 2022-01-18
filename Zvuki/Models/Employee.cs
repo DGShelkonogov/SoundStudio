@@ -12,11 +12,14 @@ namespace Zvuki.Models
     {
         [Key]
         public int IdEmployee { get; set; }
-
         string inn, snils;
         Human human;
         BankAccount bankAccount;
         ICollection<Position> positions;
+
+        [Required]
+        [RegularExpression(@"\d*")]
+        [StringLength(12, MinimumLength = 12)]
         public string INN
         {
             get { return inn; }
@@ -26,6 +29,10 @@ namespace Zvuki.Models
                 OnPropertyChanged("INN");
             }
         }
+
+        [Required]
+        [RegularExpression(@"\d*")]
+        [StringLength(11, MinimumLength = 11)]
         public string SNILS
         {
             get { return snils; }
@@ -35,6 +42,8 @@ namespace Zvuki.Models
                 OnPropertyChanged("SNILS");
             }
         }
+
+        [Required]
         public virtual Human Human
         {
             get { return human; }
@@ -44,6 +53,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("Human");
             }
         }
+        [Required]
         public virtual BankAccount BankAccount
         {
             get { return bankAccount; }
@@ -53,6 +63,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("BankAccount");
             }
         }
+        [Required]
         public virtual ICollection<Position> Positions
         {
             get { return positions; }
@@ -62,8 +73,6 @@ namespace Zvuki.Models
                 OnPropertyChanged("Positions");
             }
         }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string prop)

@@ -49,20 +49,34 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
 
-                        Equipment equipment = new Equipment()
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            Amount = Convert.ToInt32(txtAmount.Text),
-                            Price = Convert.ToInt32(txtPrice.Text),
-                            Title = txtTitle.Text
-                        };
 
-                        db.Equipments.Add(equipment);
-                        db.SaveChanges();
-                        loadData();
-                    });
+
+                            Equipment equipment = new Equipment()
+                            {
+                                Amount = Convert.ToInt32(txtAmount.Text),
+                                Price = Convert.ToInt32(txtPrice.Text),
+                                Title = txtTitle.Text
+                            };
+
+
+                            if (MainWindow.validData(equipment))
+                            {
+                                db.Equipments.Add(equipment);
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
         }
@@ -73,21 +87,32 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Equipment eq = equipments[EquipmentsList.SelectedIndex];
-                        Equipment equipment = db.Equipments
-                        .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
+
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            Equipment eq = equipments[EquipmentsList.SelectedIndex];
+                            Equipment equipment = db.Equipments
+                            .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
 
 
-                        equipment.Amount = Convert.ToInt32(txtAmount.Text);
-                        equipment.Price = Convert.ToInt32(txtPrice.Text);
-                        equipment.Title = txtTitle.Text;
-                        
+                            equipment.Amount = Convert.ToInt32(txtAmount.Text);
+                            equipment.Price = Convert.ToInt32(txtPrice.Text);
+                            equipment.Title = txtTitle.Text;
 
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            if (MainWindow.validData(equipment))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                 }
             });
         }
@@ -98,16 +123,25 @@ namespace Zvuki.Pages.Manager
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Equipment eq = equipments[EquipmentsList.SelectedIndex];
-                        Equipment equipment = db.Equipments
-                        .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            Equipment eq = equipments[EquipmentsList.SelectedIndex];
+                            Equipment equipment = db.Equipments
+                            .FirstOrDefault(x => x.IdEquipment == eq.IdEquipment);
 
-                        db.Equipments.Remove(equipment);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            db.Equipments.Remove(equipment);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
         }
@@ -119,20 +153,45 @@ namespace Zvuki.Pages.Manager
 
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-
-                        var equipments = db.Equipments.ToList();
-                        this.equipments.Clear();
-                        foreach (var vr in equipments)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.equipments.Add(vr);
-                        }
-                    });
+
+                            var equipments = db.Equipments.ToList();
+                            this.equipments.Clear();
+                            foreach (var vr in equipments)
+                            {
+                                this.equipments.Add(vr);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
 
         }
 
+        private void EquipmentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Equipment eq = equipments[EquipmentsList.SelectedIndex];
+                txtAmount.Text = eq.Amount.ToString();
+                txtPrice.Text = eq.Price.ToString();
+                txtTitle.Text = eq.Title;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
     }
 }
+

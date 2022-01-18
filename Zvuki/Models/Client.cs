@@ -14,14 +14,18 @@ namespace Zvuki.Models
         [Key]
         public int IdClient { get; set; }
 
+        [Required]
+        [Range(0, 1000)]
         public virtual int AmountMoney { get; set; }
 
+        [Required]
         public virtual Human Human { get; set; }
 
         public virtual ICollection<Group> Groups { get; set; }
 
         public virtual ICollection<Rent> Rents { get; set; }
 
+        [Required]
         public virtual ICollection<AudioRecordingClient> AudioRecordingClients { get; set; }
         /*
                 int amountMoney;
@@ -100,7 +104,5 @@ namespace Zvuki.Models
                     if (PropertyChanged != null)
                         PropertyChanged(this, new PropertyChangedEventArgs(prop));
                 }*/
-
-
     }
 }

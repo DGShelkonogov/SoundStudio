@@ -17,6 +17,9 @@ namespace Zvuki.Models
         DateTime datePayment;
         Employee employee;
 
+
+        [Required]
+        [Range(1, 999999)]
         public int SumPayment
         {
             get { return sumPayment; }
@@ -26,6 +29,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("SumPayment");
             }
         }
+        [Required]
         [Column(TypeName = "Date")]
         public DateTime DatePayment
         {
@@ -36,6 +40,7 @@ namespace Zvuki.Models
                 OnPropertyChanged("DatePayment");
             }
         }
+        [Required]
         public virtual Employee Employee
         {
             get { return employee; }

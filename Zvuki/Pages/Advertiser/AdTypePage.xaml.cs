@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Zvuki.Models;
+using Annotation = System.ComponentModel.DataAnnotations;
 
 namespace Zvuki.Pages.Advertiser
 {
@@ -49,18 +51,28 @@ namespace Zvuki.Pages.Advertiser
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-
-                        AdType adType = new AdType
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            Title = txtTitle.Text
-                        };
 
-                        db.AdTypes.Add(adType);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                            AdType adType = new AdType
+                            {
+                                Title = txtTitle.Text
+                            };
+                            if (MainWindow.validData(adType))
+                            {
+                                db.AdTypes.Add(adType);
+                                db.SaveChanges();
+                                loadData();
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                   
                 }
             });
         }
@@ -71,15 +83,30 @@ namespace Zvuki.Pages.Advertiser
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        AdType at = adTypes[AdTypeList.SelectedIndex];
-                        AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
 
-                        adType.Title = txtTitle.Text;
-                        db.SaveChanges();
-                        loadData();
-                    });
+
+                            AdType at = adTypes[AdTypeList.SelectedIndex];
+                            AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
+
+                            adType.Title = txtTitle.Text;
+
+                            if (MainWindow.validData(adType))
+                            {
+                                db.SaveChanges();
+                                loadData();
+                            }
+
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                   
                 }
             });
         }
@@ -90,14 +117,23 @@ namespace Zvuki.Pages.Advertiser
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+
+                    try
                     {
-                        AdType at = adTypes[AdTypeList.SelectedIndex];
-                        AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
-                        db.AdTypes.Remove(adType);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            AdType at = adTypes[AdTypeList.SelectedIndex];
+                            AdType adType = db.AdTypes.FirstOrDefault(x => x.IdAdType == at.IdAdType);
+                            db.AdTypes.Remove(adType);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    
                 }
             });
         }
@@ -109,18 +145,42 @@ namespace Zvuki.Pages.Advertiser
 
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
-                    {
 
-                        var adTypes = db.AdTypes.ToList();
-                        this.adTypes.Clear();
-                        foreach (var adT in adTypes)
+                    try
+                    {
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.adTypes.Add(adT);
-                        }
-                    });
+
+                            var adTypes = db.AdTypes.ToList();
+                            this.adTypes.Clear();
+                            foreach (var adT in adTypes)
+                            {
+                                this.adTypes.Add(adT);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    
                 }
             });
+        }
+
+
+
+        private void AdTypeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                AdType at = adTypes[AdTypeList.SelectedIndex];
+                txtTitle.Text = at.Title;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

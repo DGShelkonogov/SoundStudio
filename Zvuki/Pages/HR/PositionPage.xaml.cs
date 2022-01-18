@@ -54,20 +54,34 @@ namespace Zvuki.Pages.HR
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-
-                        Position position = new Position()
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            Title = txtTitle.Text,
-                            Salary = Convert.ToInt32(txtSalary.Text)
-                        };
-                        // добавляем их в бд
-                        db.Positions.Add(position);
-                        db.SaveChanges();
-                        positions.Add(position);
 
-                    });
+                            Position position = new Position()
+                            {
+                                Title = txtTitle.Text,
+                                Salary = Convert.ToInt32(txtSalary.Text)
+                            };
+                            // добавляем их в бд
+
+
+                            if (MainWindow.validData(position))
+                            {
+                                db.Positions.Add(position);
+                                db.SaveChanges();
+                                positions.Add(position);
+                            }
+
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
         }
@@ -78,16 +92,28 @@ namespace Zvuki.Pages.HR
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                       
-                        Position p = positions[PositionList.SelectedIndex];
-                        Position position = db.Positions.FirstOrDefault(x => x.IdPosition == p.IdPosition);
-                        position.Title = txtTitle.Text;
-                        position.Salary = Convert.ToInt32(txtSalary.Text);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+
+                            Position p = positions[PositionList.SelectedIndex];
+                            Position position = db.Positions.FirstOrDefault(x => x.IdPosition == p.IdPosition);
+                            position.Title = txtTitle.Text;
+                            position.Salary = Convert.ToInt32(txtSalary.Text);
+                            if (MainWindow.validData(position))
+                            {
+                                db.SaveChanges();
+                                positions.Add(position);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
         }
@@ -98,14 +124,23 @@ namespace Zvuki.Pages.HR
             {
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        Position p = positions[PositionList.SelectedIndex];
-                        Position position = db.Positions.FirstOrDefault(x => x.IdPosition == p.IdPosition);
-                        db.Positions.Remove(position);
-                        db.SaveChanges();
-                        loadData();
-                    });
+                        App.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            Position p = positions[PositionList.SelectedIndex];
+                            Position position = db.Positions.FirstOrDefault(x => x.IdPosition == p.IdPosition);
+                            db.Positions.Remove(position);
+                            db.SaveChanges();
+                            loadData();
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    
                 }
             });
         }
@@ -117,16 +152,25 @@ namespace Zvuki.Pages.HR
                 
                 using (ApplicationContext db = new ApplicationContext())
                 {
-                    App.Current.Dispatcher.Invoke((Action)delegate
+                    try
                     {
-                        
-                        var positions = db.Positions.ToList();
-                        this.positions.Clear();
-                        foreach (var position in positions)
+                        App.Current.Dispatcher.Invoke((Action)delegate
                         {
-                            this.positions.Add(position);
-                        }
-                    });
+
+                            var positions = db.Positions.ToList();
+                            this.positions.Clear();
+                            foreach (var position in positions)
+                            {
+                                this.positions.Add(position);
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                   
                 }
             });
 

@@ -15,6 +15,7 @@ namespace Zvuki.Models
         AudioRecording audioRecording;
         Copyright copyright;
 
+        [Required]
         public virtual AudioRecording AudioRecording
         {
             get { return audioRecording; }
@@ -24,7 +25,8 @@ namespace Zvuki.Models
                 OnPropertyChanged("AudioRecording");
             }
         }
-        
+
+        [Required]
         public virtual Copyright Copyright
         {
             get { return copyright; }

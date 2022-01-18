@@ -14,6 +14,9 @@ namespace Zvuki.Models
         public int IdBankAccount { get; set; }
         string number, bank, bik, inn, kpp, korAccount;
 
+        [Required]
+        [RegularExpression(@"\d*")]
+        [StringLength(20, MinimumLength = 20)]
         public string Number
         {
             get { return number; }
@@ -23,6 +26,10 @@ namespace Zvuki.Models
                 OnPropertyChanged("Number");
             }
         }
+
+        [Required]
+        [RegularExpression(@"\D*")]
+        [StringLength(50, MinimumLength = 5)]
         public string Bank
         {
             get { return bank; }
@@ -32,6 +39,10 @@ namespace Zvuki.Models
                 OnPropertyChanged("Bank");
             }
         }
+
+        [Required]
+        [RegularExpression(@"\d*")]
+        [StringLength(9, MinimumLength = 9)]
         public string Bik
         {
             get { return bik; }
@@ -41,6 +52,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("Bik");
             }
         }
+        [Required]
+        [RegularExpression(@"\d*")]
+        [StringLength(12, MinimumLength = 12)]
         public string INN
         {
             get { return inn; }
@@ -50,6 +64,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("INN");
             }
         }
+        [Required]
+        [RegularExpression(@"\d*")]
+        [StringLength(9, MinimumLength = 9)]
         public string KPP
         {
             get { return kpp; }
@@ -59,6 +76,9 @@ namespace Zvuki.Models
                 OnPropertyChanged("KPP");
             }
         }
+        [Required]
+        [RegularExpression(@"\d*")]
+        [StringLength(20, MinimumLength = 20)]
         public string KorAccount
         {
             get { return korAccount; }

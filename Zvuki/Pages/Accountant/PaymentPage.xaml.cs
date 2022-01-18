@@ -61,18 +61,22 @@ namespace Zvuki.Pages.Accountant
                     {
                         Employee e = cmbEmployees.SelectedItem as Employee;
 
-                        PaymentAccount payment = new PaymentAccount
+                        PaymentAccount paymentAccount = new PaymentAccount
                         {
                             DatePayment = DateTime.Now,
                             SumPayment = Convert.ToInt32(txtSumPayment.Text),
                             Employee = db.Employees.FirstOrDefault(x => x.IdEmployee == e.IdEmployee)
                         };
+                        if (MainWindow.validData(paymentAccount))
+                        {
+                            db.PaymentAccounts.Add(paymentAccount);
+                            db.SaveChanges();
+                            loadData();
+                        }
 
-                     
-                        // добавляем их в бд
-                        db.PaymentAccounts.Add(payment);
-                        db.SaveChanges();
-                        loadData();
+
+                       
+                      
                     });
                 }
             });
@@ -92,9 +96,12 @@ namespace Zvuki.Pages.Accountant
 
                         paymentAccount.Employee = db.Employees.FirstOrDefault(x => x.IdEmployee == e.IdEmployee);
                         paymentAccount.SumPayment = Convert.ToInt32(txtSumPayment.Text);
-                        
-                        db.SaveChanges();
-                        loadData();
+
+                        if (MainWindow.validData(paymentAccount))
+                        {
+                            db.SaveChanges();
+                            loadData();
+                        }
                     });
                 }
             });
@@ -149,6 +156,22 @@ namespace Zvuki.Pages.Accountant
                     });
                 }
             });
+        }
+
+        private void PaymentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                PaymentAccount p = paymentAccounts[PaymentList.SelectedIndex];
+                cmbEmployees.SelectedItem = p.Employee;
+                txtSumPayment.Text = p.SumPayment.ToString();
+            }
+            catch (Exception ex)
+            {
+
+            }
+           
+
         }
     }
 }
